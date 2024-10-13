@@ -38,11 +38,11 @@ class UserModel(AbstractBaseUser, PermissionsMixin):
         default=False
     )
     is_student = models.BooleanField(
-        'Student account',
+        'Whizzer account',
         default=False
     )
     is_teacher = models.BooleanField(
-        'Teacher account',
+        'Creator account',
         default=False
     )
 
