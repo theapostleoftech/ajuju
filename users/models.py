@@ -37,6 +37,14 @@ class UserModel(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(
         default=False
     )
+    is_student = models.BooleanField(
+        'Student account',
+        default=False
+    )
+    is_teacher = models.BooleanField(
+        'Teacher account',
+        default=False
+    )
 
     objects = UserManager()
 

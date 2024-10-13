@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'theme',
     'django_browser_reload',
     'users',
+    'formtools',
 ]
 
 MIDDLEWARE = [
