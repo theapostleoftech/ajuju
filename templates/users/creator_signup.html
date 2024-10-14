@@ -54,10 +54,8 @@
                                 {% include "users/signup_steps/step1.html" %}
                             {% elif wizard.steps.current == 'personal_details' %}
                                 {% include "users/signup_steps/step2.html" %}
-                            {% elif wizard.steps.current == 'company_details' %}
-                                {% include "users/signup_steps/step3.html" %}
                             {% elif wizard.steps.current == 'password_details' %}
-                                {% include "users/signup_steps/step4.html" %}
+                                {% include "users/signup_steps/step3.html" %}
                             {% endif %}
 
                         {% endif %}

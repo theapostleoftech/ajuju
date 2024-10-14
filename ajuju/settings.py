@@ -140,7 +140,7 @@ CELERY_TASK_TRACK_STARTED = True
 CELERY_TASK_TIME_LIMIT = 30 * 60
 CELERY_BROKER_URL = 'amqp://guest:guest@localhost'
 CELERY_ACCEPT_CONTENT = ['json']
-# CELERY_RESULT_BACKEND = 'db+sqlite:///results.sqlite'
+CELERY_RESULT_BACKEND = 'rpc://'  # 'db+sqlite:///results.sqlite'
 CELERY_TASK_SERIALIZER = 'json'
 
 LOGIN_URL = 'users:login'
@@ -152,5 +152,5 @@ NO_REPLY_EMAIL = env('NO_REPLY_EMAIL')
 ANYMAIL = {
     "MAILGUN_API_KEY": env('MAILGUN_API_KEY'),
     "MAILGUN_API_URL": "https://api.mailgun.net/v3/",
-    "MAILGUN_SENDER_DOMAIN": "mail.delivit.io"
+    "MAILGUN_SENDER_DOMAIN": "mail.the10x.tech"
 }

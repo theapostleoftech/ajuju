@@ -1,3 +1,4 @@
+import logging
 import random
 import string
 
@@ -11,6 +12,9 @@ from formtools.wizard.views import SessionWizardView
 from teachers.models import Creator
 from users.forms import creator_forms as forms
 from users.tasks.task_send_otp import send_otp_email
+
+# Logging
+logger = logging.getLogger(__name__)
 
 
 # Create your views here.
@@ -29,9 +33,12 @@ class CreatorSignUpView(SessionWizardView):
         current_step = self.steps.current
         form = self.get_form(data=self.request.POST, files=self.request.FILES)
 
+        logger.info(f"Handling POST request at step: {current_step}")
+
         if current_step == 'email_details':
             email = self.request.POST.get('email_details-email')
             if email:
+                logger.info(f"Checking if user with email {email} exists")
                 existing_user = get_user_model().objects.filter(email=email).first()
                 if existing_user:
                     if not existing_user.is_active or not existing_user.is_email_verified:
@@ -41,11 +48,13 @@ class CreatorSignUpView(SessionWizardView):
                         existing_user.otp_created_at = timezone.now()
                         existing_user.save()
                         send_otp_email.delay(str(existing_user.id), otp)
+                        logger.info(f"Sent new OTP to existing user {existing_user.email}")
                         messages.info(self.request,
                                       "An account with this email already exists. We've sent a new verification OTP.")
                         return redirect('users:verify_otp', user_id=existing_user.id)
                     else:
                         # User exists and is fully activated
+                        logger.warning(f"User with email {email} already exists and is activated")
                         messages.error(self.request,
                                        "An account with this email already exists. Please log in instead.")
                         return redirect('users:login')
@@ -59,6 +68,7 @@ class CreatorSignUpView(SessionWizardView):
 
         try:
             with transaction.atomic():
+                logger.info(f"Creating new user with email {email_details['email']}")
                 user = get_user_model().objects.create_user(
                     email=email_details['email'],
                     username=email_details['username'],
@@ -82,6 +92,7 @@ class CreatorSignUpView(SessionWizardView):
                 send_otp_email.delay(str(user.id), otp)
 
         except Exception as e:
+            logger.error(f"An error occurred during signup for email {email_details['email']}: {e}")
             messages.error(self.request, "An error occurred during signup. Please try again.")
             return self.render_revalidation_failure('personal_details', form_list, **kwargs)
 

@@ -3,8 +3,10 @@ This module contains the form for OTP (One-Time Password) verification.
 """
 from django import forms
 
+from core.forms import BaseFormMixin
 
-class OTPVerificationForm(forms.Form):
+
+class OTPVerificationForm(BaseFormMixin, forms.Form):
     """
     Form for OTP (One-Time Password) verification.
     """

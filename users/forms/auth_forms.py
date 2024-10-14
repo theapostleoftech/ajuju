@@ -3,8 +3,10 @@ This module contains the form for the login process.
 """
 from django import forms
 
+from core.forms import BaseFormMixin
 
-class LoginForm(forms.Form):
+
+class LoginForm(BaseFormMixin, forms.Form):
     """
     Form for the login process.
     """

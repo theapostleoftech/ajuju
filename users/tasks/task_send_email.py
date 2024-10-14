@@ -13,7 +13,7 @@ def send_welcome_email(self, user_id: str) -> None:
         with transaction.atomic():
             user = get_user_model().objects.get(id=user_id)
 
-            mail_subject = f"Welcome to Delivit!"
+            mail_subject = f"Welcome to Ajuju!"
             from_email = settings.DEFAULT_FROM_EMAIL
             context = {
                 'user': user,

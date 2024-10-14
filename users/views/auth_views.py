@@ -11,16 +11,17 @@ from django.utils.decorators import method_decorator
 from django.views import View
 
 from users.forms.auth_forms import LoginForm
+from users.tasks.task_send_otp import send_otp_email
 
 
 class LoginView(View):
-    template_name = 'accounts/public/login.html'
+    template_name = 'users/login.html'
     form_class = LoginForm
 
     def get(self, request):
         if request.user.is_authenticated:
             messages.info(self.request, 'You are already logged in.')
-            return redirect('core:public_dashboard')
+            return redirect('users:public_dashboard')
         form = self.form_class()
         return render(request, self.template_name, context={'form': form})
 
@@ -46,7 +47,7 @@ class LoginView(View):
 
                         if next_page:
                             return redirect(next_page)
-                        return redirect('core:dashboard')
+                        return redirect('users:dashboard')
                     else:
                         otp = ''.join(random.choices(string.digits, k=6))
                         user.otp = otp
