@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'teachers',
     'formtools',
     'anymail',
+    'widget_tweaks',
 ]
 
 MIDDLEWARE = [

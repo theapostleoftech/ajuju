@@ -5,8 +5,10 @@ from django import forms
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm
 
+from core.forms import BaseFormMixin
 
-class CreatorSignUpEmailForm(forms.ModelForm):
+
+class CreatorSignUpEmailForm(BaseFormMixin, forms.ModelForm):
     """
     This is the sign up form for the email details of a Creator.
     """
@@ -40,7 +42,7 @@ class CreatorSignUpEmailForm(forms.ModelForm):
         return username
 
 
-class CreatorSignUpPersonalDetailForm(forms.ModelForm):
+class CreatorSignUpPersonalDetailForm(BaseFormMixin, forms.ModelForm):
     """
     This is the sign up form for the personal details of a Creator.
     """
@@ -50,7 +52,7 @@ class CreatorSignUpPersonalDetailForm(forms.ModelForm):
         fields = ['full_name']
 
 
-class CreatorSignUpPasswordForm(UserCreationForm):
+class CreatorSignUpPasswordForm(BaseFormMixin, UserCreationForm):
     """
        This is the sign up form for the password details of a Creator.
     """

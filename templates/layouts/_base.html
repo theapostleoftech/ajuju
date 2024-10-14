@@ -1,6 +1,6 @@
 {% load static tailwind_tags %}
 <!DOCTYPE html>
-<html data-theme="cupcake" lang="en"></html>
+<html data-theme="cupcake" lang="en">
 <head>
     <title> {% block title %}{% endblock title %} | Ajuju </title>
     {% tailwind_preload_css %}
@@ -46,5 +46,6 @@
 
 
 {% block footer_js %}{% endblock footer_js %}
+<script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
 </body>
 </html>

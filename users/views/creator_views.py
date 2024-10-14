@@ -10,7 +10,7 @@ from formtools.wizard.views import SessionWizardView
 
 from teachers.models import Creator
 from users.forms import creator_forms as forms
-from users.tasks import send_otp_email
+from users.tasks.task_send_otp import send_otp_email
 
 
 # Create your views here.
@@ -21,7 +21,6 @@ class CreatorSignUpView(SessionWizardView):
     form_list = [
         ('email_details', forms.CreatorSignUpEmailForm),
         ('personal_details', forms.CreatorSignUpPersonalDetailForm),
-        # ('creator_details', forms.CreatorSignUpCreatorDetailsForm),
         ('password_details', forms.CreatorSignUpPasswordForm)
     ]
     template_name = "users/creator_signup.html"
@@ -44,19 +43,18 @@ class CreatorSignUpView(SessionWizardView):
                         send_otp_email.delay(str(existing_user.id), otp)
                         messages.info(self.request,
                                       "An account with this email already exists. We've sent a new verification OTP.")
-                        return redirect('accounts:verify_email_with_otp', user_id=existing_user.id)
+                        return redirect('users:verify_otp', user_id=existing_user.id)
                     else:
                         # User exists and is fully activated
                         messages.error(self.request,
                                        "An account with this email already exists. Please log in instead.")
-                        return redirect('accounts:signin')
+                        return redirect('users:login')
 
         return super().post(*args, **kwargs)
 
     def done(self, form_list, **kwargs):
         email_details = self.get_cleaned_data_for_step('email_details')
         personal_details = self.get_cleaned_data_for_step('personal_details')
-        creator_details = self.get_cleaned_data_for_step('creator_details')
         password_details = self.get_cleaned_data_for_step('password_details')
 
         try:
@@ -88,4 +86,4 @@ class CreatorSignUpView(SessionWizardView):
             return self.render_revalidation_failure('personal_details', form_list, **kwargs)
 
         messages.success(self.request, "Your account has been created. Please verify your email with OTP sent.")
-        return redirect('accounts:verify_email_with_otp', user_id=user.id)
+        return redirect('users:verify_otp', user_id=user.id)

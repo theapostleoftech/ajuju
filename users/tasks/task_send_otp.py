@@ -15,7 +15,7 @@ def send_otp_email(self, user_id: str, otp: str) -> None:
 
                 mail_subject = "Verify Your Email - One Time Password"
                 from_email = settings.NO_REPLY_EMAIL
-                html_message = render_to_string('accounts/public/emails/public_otp_email.html', {
+                html_message = render_to_string('users/emails/send_otp_email.html', {
                     'user': user,
                     'otp': otp,
                 })

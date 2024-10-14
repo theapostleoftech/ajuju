@@ -1,0 +1,99 @@
+{% extends 'layouts/_base.html' %}
+{% load static widget_tweaks %}
+{% block title %}Signup as a Creator{% endblock title %}
+{% block css %}{% endblock css %}
+{% block head_js %}
+{% endblock head_js %}
+{% block head %}
+    {{ wizard.form.media }}
+{% endblock %}
+{% block content %}
+    <div class="h-screen flex items-center justify-center mb-4 relative">
+        <div class="max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto relative z-10 w-full">
+            <div class="relative flex flex-col items-center">
+                <!-- Card -->
+                <div class="bg-primary-50 border-4 border-secondary-700 w-full max-w-lg flex flex-col rounded-xl p-4 sm:p-6 lg:p-10">
+                    <div class="text-center">
+                        <h1 class="text-3xl font-bold text-secondary-700 text-left">Hi there! <span
+                                class="pl-1">👋</span></h1>
+                        <p class="text-sm text-left text-secondary-500 font-medium pt-4">To
+                            create
+                            your
+                            account,
+                            please provide the information below. Already have an account?
+                            <a title=""
+                               class="font-bold text-primary-500 decoration-2 hover:underline
+                        focus:outline-none focus:underline"
+                               href="{% url 'users:login' %}">Sign in</a></p>
+                    </div>
+
+                    <form novalidate method="post" class="mt-6">
+                        {% csrf_token %}
+                        {{ wizard.management_form }}
+                        {% if wizard.form.forms %}
+                            {{ wizard.form.management_form }}
+                            {% for form in wizard.form.forms %}
+                                {{ form.as_p }}
+                            {% endfor %}
+
+                            {% if wizard.form.errors %}
+                                <div class="alert alert-danger">
+                                    <ul>
+                                        {% for field in wizard.form %}
+                                            {% for error in field.errors %}
+                                                <li>{{ error }}</li>
+                                            {% endfor %}
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            {% endif %}
+
+                        {% else %}
+
+                            {% if wizard.steps.current == 'email_details' %}
+                                {% include "users/signup_steps/step1.html" %}
+                            {% elif wizard.steps.current == 'personal_details' %}
+                                {% include "users/signup_steps/step2.html" %}
+                            {% elif wizard.steps.current == 'company_details' %}
+                                {% include "users/signup_steps/step3.html" %}
+                            {% elif wizard.steps.current == 'password_details' %}
+                                {% include "users/signup_steps/step4.html" %}
+                            {% endif %}
+
+                        {% endif %}
+
+                        <div class="mt-6 flex flex-col sm:flex-row sm:justify-between sm:space-x-4 space-y-2 sm:space-y-0 ">
+                            {% if wizard.steps.prev %}
+                                <button name="wizard_goto_step" type="submit" value="{{ wizard.steps.prev }}"
+                                        class="w-full py-3.5 px-4 inline-flex justify-center
+						        items-center gap-x-2 text-sm font-bold rounded-xl border border-transparent
+						        bg-primary-500 text-white focus:outline-none"> Previous
+                                </button>
+                            {% endif %}
+                            <input
+                                    type="submit"
+                                    value="{% if wizard.steps.current == wizard.steps.last %} Complete Sign Up {% else %} Next  {% endif %}"
+                                    class="w-full py-3.5 px-4 inline-flex justify-center
+                            items-center gap-x-2 text-sm font-bold rounded-xl border border-transparent
+                            bg-primary-500 text-white focus:outline-none"></div>
+
+                        <!-- Acknowledgement -->
+                        <div class="flex text-center justify-center mt-8 mb-8">
+                            <div class="text-center">
+                                <p class="text-xs text-secondary-500 text-left">By signing up, you acknowledge that you
+                                    have read
+                                    and understood, and agree to Ajuju's
+                                    <a class="text-primary-500 decoration-2 hover:underline focus:outline-none focus:underline font-medium"
+                                       href="">Privacy policy</a></p>
+                            </div>
+                        </div>
+                        <!-- End Acknowledgement -->
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}
+{% block footer_js %}{% endblock footer_js %}
