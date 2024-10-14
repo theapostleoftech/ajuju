@@ -68,4 +68,4 @@ class UserModel(AbstractBaseUser, PermissionsMixin):
         return self.full_name
 
     def __str__(self):
-        return f"{self.email} ({self.full_name})"
+        return f"{self.email} - {self.full_name}"
