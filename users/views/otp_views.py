@@ -6,8 +6,10 @@ from django.contrib.auth import get_user_model
 from django.shortcuts import redirect, render
 from django.utils import timezone
 from django.views import View
+
+from users.forms.otp_forms import OTPVerificationForm
+from users.tasks.task_send_email import send_welcome_email
 from users.tasks.task_send_otp import send_otp_email
-from users.forms.otp_forms import  OTPVerificationForm
 
 
 class OTPVerificationView(View):
@@ -46,6 +48,7 @@ class OTPVerificationView(View):
             else:
                 messages.error(request, "Invalid or expired OTP. Please try again or request a new OTP")
         return render(request, self.template_name, {'form': form, 'user_id': user_id})
+
 
 class ResendOTPView(View):
     def get(self, request, user_id):
