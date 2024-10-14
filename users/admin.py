@@ -16,14 +16,16 @@ class CustomUserAdmin(UserAdmin):
     add_form = UserCreationForm
 
     # Fields to be used in displaying the User model.
-    list_display = ('username', 'email', 'full_name', 'is_active', 'is_staff', 'is_superuser')
+    list_display = ('username', 'email', 'full_name', 'is_active', 'is_staff', 'is_superuser', 'date_joined')
     list_filter = ('is_active', 'is_staff', 'is_superuser')
+    ordering = ('-date_joined',)
+    readonly_fields = ('date_joined', 'last_login',)
 
     fieldsets = (
         (None, {'fields': ('username', 'email', 'password')}),
         ('Personal info', {'fields': ('full_name',)}),
         ('Permissions', {'fields': ('is_active', 'is_staff', 'is_superuser', 'groups', 'user_permissions')}),
-        ('Important dates', {'fields': ('last_login',)}),
+        ('Important dates', {'fields': ('date_joined', 'last_login')}),
     )
 
     add_fieldsets = (
@@ -34,5 +36,4 @@ class CustomUserAdmin(UserAdmin):
     )
 
     search_fields = ('username', 'email', 'full_name')
-    ordering = ('username',)
     filter_horizontal = ('groups', 'user_permissions',)

@@ -60,6 +60,10 @@ class UserModel(AbstractBaseUser, PermissionsMixin):
 
     REQUIRED_FIELDS = ["email"]
 
+    class Meta:
+        verbose_name = "User"
+        verbose_name_plural = "Users"
+
     def get_full_name(self):
         return self.full_name
 
