@@ -10,6 +10,7 @@ from formtools.wizard.views import SessionWizardView
 
 from teachers.models import Creator
 from users.forms import creator_forms as forms
+from users.tasks import send_otp_email
 
 
 # Create your views here.
