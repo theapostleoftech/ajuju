@@ -1,0 +1,10 @@
+{% now "H" as current_hour %}
+{% if current_hour|add:"0" < 12 %}
+    Good morning, {{ user.full_name }} 😊
+{% elif current_hour|add:"0" < 18 %}
+    Good afternoon, {{ user.full_name }} 😊
+{% else %}
+    Good evening, {{ user.full_name }} 😊
+{% endif %}
+
+

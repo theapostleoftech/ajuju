@@ -1,6 +1,7 @@
 from django import forms
-from django.contrib.auth.forms import ReadOnlyPasswordHashField
+from django.contrib.auth.forms import ReadOnlyPasswordHashField, SetPasswordForm
 
+from core.forms import BaseFormMixin
 from users.models import UserModel
 
 
@@ -45,3 +46,58 @@ class UserChangeForm(forms.ModelForm):
 
     def clean_password(self):
         return self.initial["password"]
+
+
+class UserAccountUpdateForm(BaseFormMixin, forms.ModelForm):
+    """
+    This form is used to update the user account details.
+    """
+    class Meta:
+        model = UserModel
+        fields = ('username', 'email', 'full_name',)
+
+    def __init__(self, *args, **kwargs):
+        super(UserAccountUpdateForm, self).__init__(*args, **kwargs)
+        self.fields['username'].disabled = True
+        self.fields['email'].disabled = True
+
+
+
+class ChangePasswordForm(BaseFormMixin, SetPasswordForm):
+    """
+    This is used to change the user password
+    """
+    old_password = forms.CharField(
+        label="Old Password",
+        widget=forms.PasswordInput(),
+        required=True
+    )
+
+    new_password1 = forms.CharField(
+        label="New Password",
+        widget=forms.PasswordInput(),
+        required=True
+    )
+
+    new_password2 = forms.CharField(
+        label="Confirm New Password",
+        widget=forms.PasswordInput(),
+        required=True
+    )
+
+    def __init__(self, user, *args, **kwargs):
+        self.user = user
+        super().__init__(user, *args, **kwargs)
+
+    def clean_old_password(self):
+        old_password = self.cleaned_data.get("old_password")
+        if not self.user.check_password(old_password):
+            raise forms.ValidationError("Sorry, your old password is incorrect.")
+        return old_password
+
+    def save(self, commit=True):
+        password = self.cleaned_data["new_password1"]
+        self.user.set_password(password)
+        if commit:
+            self.user.save()
+        return self.user

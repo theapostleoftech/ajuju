@@ -37,10 +37,13 @@
     {% block head_js %}{% endblock head_js %}
 </head>
 
-<body>
+<body class="bg-[#F4F9FF]">
 <main>
+    {% include 'snippets/messages.html' %}
 
-    {% block content %}{% endblock content %}
+    {% block content %}
+
+    {% endblock content %}
 
 </main>
 
