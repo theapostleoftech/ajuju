@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django_browser_reload',
     'users',
     'teachers',
+    'quiz',
     'formtools',
     'anymail',
     'widget_tweaks',
@@ -57,7 +58,6 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     "django_browser_reload.middleware.BrowserReloadMiddleware",
-    # 'users.middleware.UserRoleRedirectionMiddleware',
 ]
 
 ROOT_URLCONF = 'ajuju.urls'
