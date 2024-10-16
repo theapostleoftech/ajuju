@@ -1,0 +1,110 @@
+{% extends 'layouts/_base.html' %}
+{% load static widget_tweaks %}
+{% block title %}Login{% endblock title %}
+{% block css %}{% endblock css %}
+{% block head_js %}{% endblock head_js %}
+{% block head %}{% endblock %}
+{% block content %}
+    <div class="h-screen flex items-center justify-center mb-4 relative">
+        <div class="max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto relative z-10 w-full">
+            <div class="relative flex flex-col items-center">
+                <!-- Card -->
+                <div class="bg-primary-50 border-4 border-secondary-700 w-full max-w-lg flex flex-col rounded-xl p-4 sm:p-6 lg:p-10">
+                    <div class="text-center">
+                        <h1 class="text-3xl font-bold text-secondary-700 text-left">Welcome Back! <span
+                                class="pl-1">👋</span></h1>
+                        <p class="text-sm text-left text-secondary-500 font-medium pt-4">To continue, please sign in
+                            with
+                            your username and password. Don't have an account?
+                            <a title=""
+                               class="font-bold text-primary-500 decoration-2 hover:underline
+                        focus:outline-none focus:underline"
+                               href="{% url 'users:creator_signup' %}">Create one here</a></p>
+                    </div>
+
+                    <form method="POST">
+                        {% csrf_token %}
+                        <div class="mt-6 grid gap-4 lg:gap-6">
+
+                            <div>
+                                <label for="{{ form.username.id_for_label }}"
+                                       class="block mb-2 text-sm text-gray-700 font-medium">{{ form.username.label }}</label>
+                                <div class="relative">
+                                    <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+                                        <svg class="w-4 h-4 text-gray-500 dark:text-gray-400"
+                                             aria-hidden="true"
+                                             xmlns="http://www.w3.org/2000/svg"
+                                             fill="currentColor"
+                                             viewBox="0 0 20 16">
+                                            <path d="m10.036 8.278 9.258-7.79A1.979 1.979 0 0 0 18 0H2A1.987 1.987 0 0 0 .641.541l9.395 7.737Z"></path>
+                                            <path d="M11.241 9.817c-.36.275-.801.425-1.255.427-.428 0-.845-.138-1.187-.395L0 2.6V14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2.5l-8.759 7.317Z"></path>
+                                        </svg>
+                                    </div>
+
+                                    {% render_field form.username placeholder="Enter your email address" %}
+                                </div>
+                                {% if form.username.errors %}
+                                    <p class="pt-2 mt-1 text-red-500 text-xs italic">{{ form.username.errors.0 }}</p>
+                                {% endif %}
+                            </div>
+
+
+                            <!-- Password & Confirm Password -->
+
+                            <div>
+                                <label for="{{ form.password.id_for_label }}"
+                                       class="block mb-2 text-sm text-gray-700 font-medium">{{ form.password.label }}</label>
+                                <div class="relative">
+                                    <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+                                        <svg class="w-4 h-4 text-gray-500 dark:text-white"
+                                             aria-hidden="true"
+                                             xmlns="http://www.w3.org/2000/svg"
+                                             width="24"
+                                             height="24"
+                                             fill="currentColor"
+                                             viewBox="0 0 24 24">
+                                            <path fill-rule="evenodd"
+                                                  d="M8 10V7a4 4 0 1 1 8 0v3h1a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h1Zm2-3a2 2 0 1 1 4 0v3h-4V7Zm2 6a1 1 0 0 1 1 1v3a1 1 0 1 1-2 0v-3a1 1 0 0 1 1-1Z"
+                                                  clip-rule="evenodd"></path>
+                                        </svg>
+
+                                    </div>
+                                    {% render_field form.password placeholder="Enter your password" %}
+                                </div>
+                                {% if form.password.errors %}
+                                    <p class="text-red-500 text-xs italic">{{ form.password.errors.0 }}</p>
+                                {% endif %}
+                            </div>
+
+                        </div>
+
+                        <!-- End Grid -->
+
+                        <div class="mt-6 grid">
+                            <button type="submit"
+                                    class="w-full py-3 px-4 inline-flex justify-center
+						        items-center gap-x-2 text-sm font-medium rounded-xl border border-transparent
+						        bg-primary-500 text-white focus:outline-none">Login
+                            </button>
+                        </div>
+
+                        <!-- Acknowledgement -->
+                        <div class="flex text-center justify-center mt-8 mb-8">
+                            <div class="text-center">
+                                <p class="text-xs text-secondary-500 text-left">By signing up, you acknowledge that you
+                                    have read
+                                    and understood, and agree to Ajuju's
+                                    <a class="text-primary-500 decoration-2 hover:underline focus:outline-none focus:underline font-medium"
+                                       href="">Privacy policy</a></p>
+                            </div>
+                        </div>
+                        <!-- End Acknowledgement -->
+                    </form>
+                </div>
+                <!-- End Card -->
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}
+{% block footer_js %}{% endblock footer_js %}

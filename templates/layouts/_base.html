@@ -1,0 +1,54 @@
+{% load static tailwind_tags %}
+<!DOCTYPE html>
+<html data-theme="cupcake" lang="en">
+<head>
+    <title> {% block title %}{% endblock title %} | Ajuju </title>
+    {% tailwind_preload_css %}
+    {% tailwind_css %}
+    {% block css %}{% endblock css %}
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="origin">
+    <meta http-equiv="X-UA-Compatible"
+          content="ie=edge">
+    <meta property="og:title"
+          content="Ajuju is web based interactive quiz platform that enables user create, and take quizzes. Earn badges and so much more."/>
+    <meta property="og:description"
+          content="Ajuju is web based interactive quiz platform that enables user create, and take quizzes. Earn badges and so much more."/>
+    <link rel="apple-touch-icon"
+          sizes="180x180"
+          href="{% static 'static/favicon/apple-touch-icon.png' %}">
+    <link rel="icon"
+          type="image/png"
+          sizes="32x32"
+          href="{% static 'static/favicon/favicon-32x32.png' %}">
+    <link rel="icon"
+          type="image/png"
+          sizes="16x16"
+          href="{% static 'static/favicon/favicon-16x16.png' %}">
+    <link rel="manifest"
+          href="{% static 'static/favicon/site.webmanifest' %}">
+    <meta name="msapplication-TileColor"
+          content="#da532c">
+    <meta name="theme-color"
+          content="#eeeeee">
+
+    {% block head_js %}{% endblock head_js %}
+</head>
+
+<body class="bg-light-50">
+<main>
+    {% include 'snippets/messages.html' %}
+
+    {% block content %}
+
+    {% endblock content %}
+
+</main>
+
+
+{% block footer_js %}{% endblock footer_js %}
+<script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
+</body>
+</html>

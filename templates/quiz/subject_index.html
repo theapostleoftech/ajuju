@@ -1,0 +1,41 @@
+{% extends 'layouts/base_dashboard.html' %}
+{% load static widget_tweaks %}
+{% block title %}Subjects{% endblock title %}
+{% block css %}{% endblock css %}
+{% block head_js %}{% endblock head_js %}
+{% block head %}{% endblock %}
+{% block content %}
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4 mb-4">
+
+        <div class="bg-accent-800 shadow-md rounded-xl h-32 md:h-64 p-4 flex flex-col justify-center items-center">
+            <h2 class="text-2xl font-bold text-light-50">{{ subject_count }}</h2>
+            <p class="text-light-50">subject{{ subject_count|pluralize }} available</p>
+        </div>
+        <div class="bg-tertiary-500 shadow-md rounded-xl  h-32 md:h-64 p-4 flex flex-col justify-center items-center">
+            <a href="{% url 'quiz:subject_create' %}"
+               class="bg-primary-500 hover:bg-primary-700 text-light-50 font-bold py-3.5 px-4 rounded-xl">
+                New Subject
+            </a>
+        </div>
+    </div>
+
+    <div class="mt-8">
+    <h5 class="text-lg font-semibold mb-6 uppercase border-b-2 text-accent-900">Available Subjects</h5>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {% for subject in subjects %}
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <h2 class="text-xl font-semibold mb-2">{{ subject.name }}</h2>
+            <a href="{% url 'quiz:subject_update' subject.id %}"
+                   class="bg-primary-500 hover:bg-primary-700 text-light-50 font-bold py-2 px-4 rounded-xl">View Subject</a>
+            </div>
+        {% empty %}
+            <p class="col-span-3 text-center text-gray-500">No quizzes available at the moment.</p>
+        {% endfor %}
+    </div>
+
+</div>
+
+{% endblock content %}
+{% block footer_js %}{% endblock footer_js %}

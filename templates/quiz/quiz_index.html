@@ -1,0 +1,42 @@
+{% extends 'layouts/base_dashboard.html' %}
+{% load static widget_tweaks %}
+{% block title %}Quiz{% endblock title %}
+{% block css %}{% endblock css %}
+{% block head_js %}{% endblock head_js %}
+{% block head %}{% endblock %}
+{% block content %}
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4 mb-4">
+
+        <div class="bg-accent-800 shadow-md rounded-xl h-32 md:h-64 p-4 flex flex-col justify-center items-center">
+            <h2 class="text-2xl font-bold text-light-50">{{ quiz_count }}</h2>
+            <p class="text-light-50">Quiz{{ quiz_count|pluralize }}</p>
+        </div>
+        <div class="bg-tertiary-500 shadow-md rounded-xl  h-32 md:h-64 p-4 flex flex-col justify-center items-center">
+            <a href="{% url 'quiz:quiz_create' %}"
+               class="bg-primary-500 hover:bg-primary-700 text-light-50 font-bold py-3.5 px-4 rounded-xl">
+                New Quiz
+            </a>
+        </div>
+    </div>
+    <h1 class="text-3xl font-bold mb-6">Available Quizzes</h1>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {% for quiz in quizzes %}
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <h2 class="text-xl font-semibold mb-2">{{ quiz.title }}</h2>
+                <p class="text-gray-600 mb-4">{{ quiz.description|truncatewords:20 }}</p>
+                <p class="text-sm text-gray-500 mb-2">Subject: {{ quiz.subject.name }}</p>
+                <p class="text-sm text-gray-500 mb-4">Time Limit: {{ quiz.time_limit }} seconds</p>
+                <a href="{% url 'quiz:quiz_update' quiz.id %}"
+                   class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">View Quiz</a>
+            </div>
+        {% empty %}
+            <p class="col-span-3 text-center text-gray-500">No quizzes available at the moment.</p>
+        {% endfor %}
+    </div>
+
+
+
+{% endblock content %}
+{% block footer_js %}{% endblock footer_js %}

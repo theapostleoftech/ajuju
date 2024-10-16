@@ -1,0 +1,11 @@
+<p class="text-gray-200 mt-1 font-normal tracking-tight">
+    {% if request.user.is_teacher %}
+
+        This is your dashboard where you can send parcels, track
+        updates
+        of sent parcels and manage your inventory in
+        real-time, etc...
+    {% else %}
+        This is your dashboard where you can manage deliveries, delight your customers, and grow your business...
+    {% endif %}
+</p>

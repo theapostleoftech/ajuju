@@ -1,0 +1,15 @@
+<aside class="bg-light-500 fixed top-0 left-0 z-40 w-64 h-screen pt-14
+transition-transform -translate-x-full md:translate-x-0"
+       aria-label="Sidenav"
+       id="drawer-navigation">
+
+    {% if request.user.is_teacher %}
+        {% include 'aside_menu/creator_aside.html' %}
+
+
+    {% else %}
+
+{#        {% include 'aside_menu/whizzer_aside.html' %}#}
+    {% endif %}
+
+</aside>
