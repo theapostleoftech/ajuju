@@ -4,23 +4,25 @@
 
 {% block content %}
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
-        <div class="bg-tertiary-300 shadow-md rounded-xl h-32 md:h-64 p-4 flex flex-col justify-center items-center">
-            <h2 class="text-2xl font-bold text-blue-600">{{ quiz_count }}</h2>
-            <p class="text-gray-600">Quiz{{ quiz_count|pluralize }}</p>
+        <div class="bg-accent-500 rounded-xl h-32 md:h-64 p-4 flex flex-col justify-center items-center">
+            <h2 class="text-3xl font-bold text-light-100">{{ quiz_count }}</h2>
+            <p class="text-light-50">Quiz{{ quiz_count|pluralize }}</p>
         </div>
-        <div class="border-2 border-dashed rounded-lg border-gray-300 dark:border-gray-600 h-32 md:h-64 p-4 flex flex-col justify-center items-center">
-            <h2 class="text-2xl font-bold text-green-600">{{ subject_count }}</h2>
-            <p class="text-gray-600">Subject{{ subject_count|pluralize }}</p>
+        <div class="bg-primary-500 rounded-xl  h-32 md:h-64 p-4 flex flex-col justify-center items-center">
+            <h2 class="text-3xl font-bold text-light-100">{{ subject_count }}</h2>
+            <p class="text-light-50">Subject{{ subject_count|pluralize }}</p>
         </div>
-        <div class="border-2 border-dashed rounded-lg border-gray-300 dark:border-gray-600 h-32 md:h-64 p-4 flex flex-col justify-center items-center">
-            <h2 class="text-2xl font-bold text-purple-600">{{ active_whizzers_count }}</h2>
-            <p class="text-gray-600">Active Whizzers</p>
+        <div class="bg-tertiary-800 rounded-xl  h-32 md:h-64 p-4 flex flex-col justify-center items-center">
+            <h2 class="text-3xl font-bold text-light-100">{{ active_whizzers_count }}</h2>
+            <p class="text-light-50">Active Whizzers</p>
         </div>
+    
     </div>
 
     <div class="mt-8">
-        <h5 class="text-lg font-semibold mb-6 uppercase border-b-2 text-accent-900">What do you want to do today?</h5>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4 mb-4">
+        <h5 class="text-md font-medium capitalize text-accent-900">What do you want to do today?</h5>
+         <hr class="my-4 border-2 border-accent-500">
+        <div class="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4 mb-4">
 
             <div class="bg-accent-800 shadow-md rounded-xl h-32 md:h-64 p-4 flex flex-col justify-center items-center">
                 <a href="{% url 'quiz:quiz_create' %}"
