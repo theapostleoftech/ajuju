@@ -48,7 +48,7 @@ class Quiz(BaseModel):
     creator = models.ForeignKey(
         Creator,
         on_delete=models.CASCADE,
-        related_name='created_quizzes'
+        related_name='teacher'
     )
     time_limit = models.PositiveIntegerField(
         help_text="Time limit for the quiz in seconds",

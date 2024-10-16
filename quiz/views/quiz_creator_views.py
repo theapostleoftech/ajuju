@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.db import transaction
 from django.urls import reverse_lazy
 
@@ -10,11 +11,16 @@ class QuizCreateView(CreatorBaseCreateView):
     model = Quiz
     form_class = QuizForm
     template_name = 'quiz/quiz_form.html'
-    success_url = reverse_lazy('quiz_list')
+    success_url = reverse_lazy('quiz:quiz_index')
 
     def form_valid(self, form):
-        form.instance.creator = self.request.user
+        form.instance.creator = self.request.user.teacher
+        messages.success(self.request, f"Subject has been created successfully.")
         return super().form_valid(form)
+
+    def form_invalid(self, form):
+        messages.error(self.request, "There was an error creating the subject. Please try again.")
+        return super().form_invalid(form)
 
 
 class QuizUpdateView(CreatorBaseUpdateView):
