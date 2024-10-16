@@ -163,13 +163,15 @@
                                             <td class="pad"
                                                 style="padding-bottom:30px;padding-left:10px;padding-right:10px;padding-top:5px;">
                                                 <div style="color:#100c3c;font-family:'Rubik', Arial, 'Helvetica Neue', Helvetica, sans-serif;font-size:14px;line-height:150%;text-align:left;mso-line-height-alt:21px;">
-                                                    <p style="margin: 0; word-break: break-word;">Welcome to Ajuju!. Your account has been activated.<br/>
-                                                        You can now create quizzes for anyone to partake in.<br/></p>
-                                                    
+                                                    <p style="margin: 0; word-break: break-word;">Welcome to Ajuju!.
+                                                        Your account has been activated.<br/>
+                                                        You can now have access to the ajuju quizzes platform for anyone
+                                                        to partake in.<br/></p>
+
                                                     <p style="margin: 0; word-break: break-word;">To get
                                                         started:<br/><br/>Log in to your dashboard at <a
                                                                 href="{{ protocol }}://
-                                                                        {{ domain }}{% url 'businesses:business_dashboard' %}"
+                                                                        {{ domain }}{% url 'users:login' %}"
                                                                 rel="noopener"
                                                                 style="text-decoration: underline; color: #0068A5;"
                                                                 target="_blank">Dashboard</a><br/><br/><br/></p>
@@ -202,7 +204,7 @@
                 </tr>
                 </tbody>
             </table>
-          
+
             <table align="center" border="0" cellpadding="0" cellspacing="0" class="row row-5" role="presentation"
                    style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
                 <tbody>
