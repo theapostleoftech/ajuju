@@ -14,6 +14,12 @@ class Subject(BaseModel):
     """
     Represents a subject area for quizzes.
     """
+    creator = models.ForeignKey(
+        Creator,
+        on_delete=models.CASCADE,
+        null=True,
+        related_name='created_subjects'
+    )
     name = models.CharField(
         max_length=255,
         unique=True

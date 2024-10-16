@@ -8,8 +8,8 @@ class BaseFormMixin:
         # Optional: Allow custom widget attributes to be passed in via kwargs
         self.widget_attrs = kwargs.pop('widget_attrs', {
             'class': 'inset-y-0 disabled:opacity-50 disabled:pointer-events-none rounded-xl text-sm '
-                     'inline-flex focus:border-secondary-500 focus:ring-secondary-500 bg-[#F4F9FF] '
-                     'appearance-none w-full ps-10 p-3 py-3.5 px-4 border border-secondary-800'
+                     'inline-flex focus:border-accent-800 focus:ring-accent-800 bg-light-500 '
+                     'appearance-none w-full ps-10 p-3 py-3.5 px-4 border border-accent-300'
         })
 
         super().__init__(*args, **kwargs)
