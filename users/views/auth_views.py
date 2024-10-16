@@ -25,6 +25,9 @@ class LoginView(View):
         if request.user.is_authenticated and request.user.is_teacher:
             messages.info(self.request, 'You are already logged in.')
             return redirect('teachers:creator_dashboard')
+        if request.user.is_authenticated and request.user.is_student:
+            messages.info(self.request, 'You are already logged in.')
+            return redirect('students:whizzer_dashboard')
         form = self.form_class()
         return render(request, self.template_name, context={'form': form})
 
@@ -52,6 +55,8 @@ class LoginView(View):
                             return redirect(next_page)
                         if request.user.is_teacher:
                             return redirect('teachers:creator_dashboard')
+                        if request.user.is_student:
+                            return redirect('students:whizzer_dashboard')
                     else:
                         otp = ''.join(random.choices(string.digits, k=6))
                         user.otp = otp
@@ -108,7 +113,7 @@ class UserAccountUpdateView(FormView):
                     return redirect(reverse('teachers:creator_dashboard'))
                 else:
                     messages.success(request, 'Your profile has been updated')
-                    return redirect(reverse('teachers:creator_dashboard'))
+                    return redirect(reverse('students:whizzer_dashboard'))
 
         elif request.POST.get('action') == 'update_user_password':
             password_form = ChangePasswordForm(request.user, request.POST)
@@ -120,7 +125,7 @@ class UserAccountUpdateView(FormView):
                     return redirect(reverse('teachers:creator_dashboard'))
                 else:
                     messages.success(request, 'Your profile has been updated')
-                    return redirect(reverse('teachers:creator_dashboard'))
+                    return redirect(reverse('students:whizzer_dashboard'))
 
 
 class SignUpView(TemplateView):
