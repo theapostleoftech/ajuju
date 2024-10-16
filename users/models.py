@@ -38,12 +38,32 @@ class UserModel(AbstractBaseUser, PermissionsMixin):
         default=False
     )
     is_student = models.BooleanField(
-        'Student account',
+        'Whizzer account',
         default=False
     )
     is_teacher = models.BooleanField(
-        'Teacher account',
+        'Creator account',
         default=False
+    )
+    is_email_verified = models.BooleanField(
+        default=False,
+    )
+    otp = models.CharField(
+        max_length=6,
+        blank=True,
+        null=True
+    )
+    otp_created_at = models.DateTimeField(
+        null=True,
+        blank=True
+    )
+    date_joined = models.DateTimeField(
+        auto_now_add=True,
+
+    )
+    last_login = models.DateTimeField(
+        auto_now=True,
+
     )
 
     objects = UserManager()
@@ -52,8 +72,12 @@ class UserModel(AbstractBaseUser, PermissionsMixin):
 
     REQUIRED_FIELDS = ["email"]
 
+    class Meta:
+        verbose_name = "User"
+        verbose_name_plural = "Users"
+
     def get_full_name(self):
         return self.full_name
 
     def __str__(self):
-        return f"{self.email} ({self.full_name})"
+        return f"{self.email} - {self.full_name}"
