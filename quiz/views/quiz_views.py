@@ -36,6 +36,17 @@ class SubjectIndexView(CreatorBaseListView):
 
 
 class QuizIndexView(CreatorBaseListView):
+    """
+    This is the view for displaying quizzes.
+    """
     model = Quiz
     template_name = 'quiz/quiz_index.html'
     context_object_name = 'quizzes'
+
+    def get_queryset(self):
+        return Quiz.objects.filter(creator=self.request.user.teacher)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['quiz_count'] = self.get_queryset().count()
+        return context

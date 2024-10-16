@@ -27,11 +27,7 @@ class QuizUpdateView(CreatorBaseUpdateView):
     model = Quiz
     form_class = QuizForm
     template_name = 'quiz/quiz_form.html'
-    success_url = reverse_lazy('quiz_list')
-
-    def test_func(self):
-        quiz = self.get_object()
-        return self.request.user == quiz.creator
+    success_url = reverse_lazy('quiz:quiz_index')
 
     def get_context_data(self, **kwargs):
         data = super().get_context_data(**kwargs)
