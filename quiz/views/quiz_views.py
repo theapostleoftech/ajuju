@@ -1,10 +1,17 @@
-from django.views.generic import TemplateView
+from core.views.base_views import CreatorBaseTemplateView, CreatorBaseListView
+from quiz.models import Quiz
 
 
-class QuizIndexView(TemplateView):
+# class QuizIndexView(CreatorBaseTemplateView):
+#     template_name = 'quiz/quiz_index.html'
+#
+#     # def get_context_data(self, **kwargs):
+#     #     context = super().get_context_data(**kwargs)
+#     #     context['quizzes'] = Quiz.objects.all()
+#     #     return context
+
+
+class QuizIndexView(CreatorBaseListView):
+    model = Quiz
     template_name = 'quiz/quiz_index.html'
-
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     context['quizzes'] = Quiz.objects.all()
-    #     return context
+    context_object_name = 'quizzes'
