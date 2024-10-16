@@ -7,10 +7,14 @@ class BaseFormMixin:
     def __init__(self, *args, **kwargs):
         # Optional: Allow custom widget attributes to be passed in via kwargs
         self.widget_attrs = kwargs.pop('widget_attrs', {
-            'class': 'inset-y-0 disabled:opacity-50 disabled:pointer-events-none rounded-xl text-sm '
-                     'inline-flex focus:border-accent-800 focus:ring-accent-800 bg-light-500 '
-                     'appearance-none w-full ps-10 p-3 py-3.5 px-4 border border-accent-300'
+            'class': "block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                     # 'inset-y-0 disabled:opacity-50 disabled:pointer-events-none rounded-xl text-sm '
+                     # 'inline-flex focus:border-accent-800 focus:ring-accent-800 bg-light-500 '
+                     # 'appearance-none w-full ps-10 p-3 py-3.5 px-4 border border-accent-300'
         })
+
+
+
 
         super().__init__(*args, **kwargs)
         self.apply_widget_attrs()
