@@ -37,7 +37,7 @@
     {% block head_js %}{% endblock head_js %}
 </head>
 
-<body class="bg-[#F4F9FF]">
+<body class="bg-light-500">
 <div class="antialiased">
     {% include 'snippets/dashboard_nav.html' %}
     {% include 'snippets/dashboard_aside.html' %}
@@ -52,22 +52,20 @@
                                 <!--Space for breadcrumbs -->
                             </div>
                             {% include 'snippets/messages.html' %}
-                            <div class="w-full max-w-5xl m-auto">
+                            <div class="w-full max-w-4xl m-auto">
                                 <div class="space-x-1 flex items-start pb-4">
-                                    <div class="w-full bg-secondary-500 rounded-xl lg:flex p-6 items-center justify-between">
+                                    <div class="w-full p-4 lg:flex items-center justify-between">
                                         <div class="flex">
                                             <div class="">
                                                 <div class="">
 
                                                 </div>
                                             </div>
-                                            <div class="flex flex-col justify-start items-start">
-                                                <h1 class="text-2xl font-normal tracking-tight text-white
+                                            <div class="flex flex-col justify-center items-start">
+                                                <h1 class="text-2xl font-bold tracking-tight text-accent-900
 												capitalize">
                                                     {% include 'snippets/greeting.html' %}
                                                 </h1>
-
-                                                {% include 'snippets/dashboard_info.html' %}
                                             </div>
                                         </div>
                                     </div>
