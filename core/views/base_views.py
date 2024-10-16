@@ -10,6 +10,16 @@ from ajuju.utils.decorators import whizzer_required, creator_required
 
 
 @method_decorator([login_required, whizzer_required], name='dispatch')
+class WhizzerBaseTemplateView(TemplateView):
+    """
+    This is the base view for updating a whizzer object.
+    """
+
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args, **kwargs)
+
+
+@method_decorator([login_required, whizzer_required], name='dispatch')
 class WhizzerBaseCreateView(CreateView):
     """
     This is the base view for creating a whizzer object.
