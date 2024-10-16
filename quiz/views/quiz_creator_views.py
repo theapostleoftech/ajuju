@@ -2,7 +2,7 @@ from django.db import transaction
 from django.urls import reverse_lazy
 
 from core.views.base_views import CreatorBaseCreateView, CreatorBaseUpdateView, CreatorBaseDeleteView
-from quiz.forms import QuizForm, QuestionFormSet
+from quiz.forms.quiz_forms import QuizForm, QuestionFormSet
 from quiz.models import Quiz
 
 

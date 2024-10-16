@@ -1,4 +1,4 @@
-from core.views.base_views import CreatorBaseTemplateView, CreatorBaseListView
+from core.views.base_views import CreatorBaseListView
 from quiz.models import Quiz
 
 
@@ -9,6 +9,12 @@ from quiz.models import Quiz
 #     #     context = super().get_context_data(**kwargs)
 #     #     context['quizzes'] = Quiz.objects.all()
 #     #     return context
+
+
+class SubjectIndexView(CreatorBaseListView):
+    model = Quiz
+    template_name = 'quiz/subject_index.html'
+    context_object_name = 'subjects'
 
 
 class QuizIndexView(CreatorBaseListView):

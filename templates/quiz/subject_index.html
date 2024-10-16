@@ -1,30 +1,24 @@
 {% extends 'layouts/base_dashboard.html' %}
 {% load static widget_tweaks %}
-{% block title %}Quiz{% endblock title %}
+{% block title %}Subjects{% endblock title %}
 {% block css %}{% endblock css %}
 {% block head_js %}{% endblock head_js %}
 {% block head %}{% endblock %}
 {% block content %}
-    
+
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
-    <div class="border-2 border-dashed border-gray-300 rounded-lg dark:border-gray-600 h-32 md:h-64 p-4 flex flex-col justify-center items-center">
-        <h2 class="text-2xl font-bold text-blue-600">{{ quiz_count }}</h2>
-        <p class="text-gray-600">Total Quizzes</p>
+       
+        <div class="border-2 border-dashed rounded-lg border-gray-300 dark:border-gray-600 h-32 md:h-64 p-4 flex flex-col justify-center items-center">
+            <h2 class="text-2xl font-bold text-green-600">{{ subject_count }}</h2>
+            <p class="text-gray-600">Subjects Available</p>
+        </div>
+        <div class="border-2 border-dashed rounded-lg border-gray-300 dark:border-gray-600 h-32 md:h-64 p-4 flex flex-col justify-center items-center">
+            <a href="{% url 'quiz:subject_create' %}"
+               class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                New Subject
+            </a>
+        </div>
     </div>
-    <div class="border-2 border-dashed rounded-lg border-gray-300 dark:border-gray-600 h-32 md:h-64 p-4 flex flex-col justify-center items-center">
-        <h2 class="text-2xl font-bold text-green-600">{{ subject_count }}</h2>
-        <p class="text-gray-600">Subjects Available</p>
-    </div>
-    <div class="border-2 border-dashed rounded-lg border-gray-300 dark:border-gray-600 h-32 md:h-64 p-4 flex flex-col justify-center items-center">
-        <h2 class="text-2xl font-bold text-purple-600">{{ active_whizzers_count }}</h2>
-        <p class="text-gray-600">Active Whizzers</p>
-    </div>
-    <div class="border-2 border-dashed rounded-lg border-gray-300 dark:border-gray-600 h-32 md:h-64 p-4 flex flex-col justify-center items-center">
-        <a href="{% url 'quiz:quiz_create' %}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-            Start Quizzing
-        </a>
-    </div>
-</div>
 
     <h1 class="text-3xl font-bold mb-6">Available Quizzes</h1>
 
