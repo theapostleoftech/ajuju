@@ -3,8 +3,10 @@ This module contains the models for the quiz app.
 """
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
+from django.utils import timezone
 
 from core.models import BaseModel
+from students.models import Whizzer
 from teachers.models import Creator
 
 
@@ -97,7 +99,7 @@ class Choice(BaseModel):
         related_name='choices'
     )
     text = models.CharField(
-        max_length=200
+        max_length=255
     )
     is_correct = models.BooleanField(
         default=False
@@ -105,3 +107,70 @@ class Choice(BaseModel):
 
     def __str__(self):
         return self.text
+
+
+class QuizAttempt(BaseModel):
+    """
+    Represents an attempt by a user (whizzer) to take a quiz.
+    """
+    quiz = models.ForeignKey(
+        Quiz,
+        on_delete=models.CASCADE,
+        related_name='attempts'
+    )
+    whizzer = models.ForeignKey(
+        Whizzer,
+        on_delete=models.CASCADE,
+        related_name='quiz_attempts'
+    )
+    start_time = models.DateTimeField(
+        default=timezone.now
+    )
+    end_time = models.DateTimeField(
+        null=True,
+        blank=True
+    )
+    score = models.PositiveIntegerField(
+        default=0
+    )
+
+    def __str__(self):
+        return f"{self.whizzer.user.username}'s attempt on {self.quiz.title}"
+
+    @property
+    def is_completed(self):
+        return self.end_time is not None
+
+    @property
+    def time_taken(self):
+        if self.is_completed:
+            return (self.end_time - self.start_time).total_seconds()
+        return None
+
+
+class Answer(BaseModel):
+    """
+    Represents a user's answer to a question during a quiz attempt.
+    """
+    attempt = models.ForeignKey(
+        QuizAttempt,
+        on_delete=models.CASCADE,
+        related_name='answers'
+    )
+    question = models.ForeignKey(
+        Question,
+        on_delete=models.CASCADE
+    )
+    selected_choice = models.ForeignKey(
+        Choice,
+        on_delete=models.CASCADE
+    )
+    answered_at = models.DateTimeField(
+        auto_now_add=True
+    )
+
+    class Meta:
+        unique_together = ['attempt', 'question']
+
+    def __str__(self):
+        return f"Answer to {self.question} by {self.attempt.whizzer.user.username}"
