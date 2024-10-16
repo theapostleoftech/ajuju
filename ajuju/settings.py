@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django_browser_reload',
     'users',
     'teachers',
+    'students',
     'quiz',
     'formtools',
     'anymail',
