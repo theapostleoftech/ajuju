@@ -22,6 +22,7 @@ otp_urls = [
 ]
 
 auth_urls = [
+    path('signup/', auth_views.SignUpView.as_view(), name='signup'),
     path('auth/login/', auth_views.LoginView.as_view(), name='login'),
     path('auth/logout/', LogoutView.as_view(), name='logout'),
     path('auth/update/<uuid:user_id>/', auth_views.UserAccountUpdateView.as_view(), name='user_account_update'),

@@ -10,7 +10,7 @@ from django.urls import reverse
 from django.utils import timezone
 from django.utils.decorators import method_decorator
 from django.views import View
-from django.views.generic import FormView
+from django.views.generic import FormView, TemplateView
 
 from users.forms.auth_forms import LoginForm
 from users.forms.forms import ChangePasswordForm, UserAccountUpdateForm
@@ -121,3 +121,10 @@ class UserAccountUpdateView(FormView):
                 else:
                     messages.success(request, 'Your profile has been updated')
                     return redirect(reverse('teachers:creator_dashboard'))
+
+
+class SignUpView(TemplateView):
+    """
+    This is the signup landing page view
+    """
+    template_name = 'users/signup.html'
