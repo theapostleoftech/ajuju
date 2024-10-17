@@ -3,7 +3,7 @@ This file contains the views for the students app.
 """
 from django.shortcuts import get_object_or_404
 
-from core.views.base_views import WhizzerBaseListView
+from core.views.base_views import WhizzerBaseListView, WhizzerBaseDetailView
 from quiz.models import Quiz
 
 
@@ -33,12 +33,12 @@ class WhizzerDashboardView(WhizzerBaseListView):
     #     return context
 
 
-class QuizDetailView(WhizzerBaseDetailView):
+class WhizzerQuizDetailView(WhizzerBaseDetailView):
     """
     This view displays the details of a specific quiz
     """
     model = Quiz
-    template_name = 'students/quiz_detail.html'
+    template_name = 'students/whizzer_quiz_detail.html'
     context_object_name = 'quiz'
 
     def get_object(self):

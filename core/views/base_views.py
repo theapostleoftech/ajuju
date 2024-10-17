@@ -4,7 +4,7 @@ This module contains the base views for the ajuju app.
 
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
-from django.views.generic import CreateView, UpdateView, ListView, DeleteView, TemplateView
+from django.views.generic import CreateView, UpdateView, ListView, DeleteView, TemplateView, DetailView
 
 from ajuju.utils.decorators import whizzer_required, creator_required
 
@@ -50,7 +50,7 @@ class WhizzerBaseListView(ListView):
 
 
 @method_decorator([login_required, whizzer_required], name='dispatch')
-class WhizzerBaseDetailView(UpdateView):
+class WhizzerBaseDetailView(DetailView):
     """
     This is the base view for details of an object.
     """

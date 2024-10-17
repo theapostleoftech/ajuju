@@ -1,0 +1,25 @@
+{% extends 'layouts/base_dashboard.html' %}
+{% load static widget_tweaks %}
+{% block title %}{{ quiz.title }}{% endblock title %}
+{% block css %}{% endblock css %}
+{% block head_js %}{% endblock head_js %}
+{% block head %}{% endblock %}
+{% block content %}
+    <div class="mt-8">
+        <h5 class="text-md font-medium capitalize text-accent-900">Quiz Detail</h5>
+        <hr class="my-4 border-2 border-accent-500">
+        <ul class="mb-8">
+            <li>Quiz title: {{ quiz.title }} by {{ quiz.creator.user.get_full_name }}</li>
+            <li>Quiz Description: {{ quiz.description }}</li>
+            <li>Quiz Subject: {{ quiz.subject }}</li>
+            <li>Quiz Duration: {{ quiz.time_limit }}</li>
+
+        </ul>
+
+        <a href=""
+           class="text-light-50 bg-primary-500 hover:bg-primary-700 focus:ring-4
+						focus:outline-none focus:ring-primary-300 font-medium rounded-xl text-sm px-5 py-3 text-center">Start
+            Quiz</a>
+    </div>
+{% endblock content %}
+{% block footer_js %}{% endblock footer_js %}
