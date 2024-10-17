@@ -108,7 +108,7 @@ class QuizCreateWizard(SessionWizardView):
         context = super().get_context_data(form=form, **kwargs)
         if self.steps.current == 'questions_and_choices':
             context['question_form'] = QuestionForm(prefix='question')
-            context['choice_forms'] = [ChoiceForm(prefix=f'choice_{i}') for i in range(4)]  # Default to 4 choices
+            context['choice_forms'] = [ChoiceForm(prefix=f'choice_{i}') for i in range(4)]
         return context
 
     def process_step(self, form):
@@ -179,28 +179,3 @@ class QuizCreateWizard(SessionWizardView):
             logger.error(f"Error creating quiz: {str(e)}", exc_info=True)
             messages.error(self.request, "An error occurred while creating the quiz. Please try again.")
             return self.render_to_response(self.get_context_data(form=form_list[0]))
-
-        # for i, question_text in enumerate(questions_data):
-        #     question = Question.objects.create(quiz=quiz, text=question_text)
-        #     logger.debug(f"Added question to quiz {quiz.id}: {question.text}")
-
-        # Process choices for this question
-        #         for j in range(4):  # Assuming 4 choices per question
-        #             choice_index = i * 4 + j
-        #             if choice_index < len(choices_data):
-        #                 choice_text = choices_data[choice_index]
-        #                 is_correct = is_correct_data[choice_index] == 'on'
-        #                 Choice.objects.create(
-        #                     question=question,
-        #                     text=choice_text,
-        #                     is_correct=is_correct
-        #                 )
-        #                 logger.debug(f"Added choice to question {question.id}: {choice_text}")
-        #
-        #     messages.success(self.request, "Quiz created successfully!")
-        #     return redirect(reverse_lazy('quiz:quiz_index'))
-        #
-        # except Exception as e:
-        #     logger.error(f"Error creating quiz: {str(e)}")
-        #     messages.error(self.request, "An error occurred while creating the quiz. Please try again.")
-        #     return self.render_to_response(self.get_context_data(form=form_list[0]))

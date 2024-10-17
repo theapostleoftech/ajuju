@@ -1,3 +1,10 @@
+from django.db.models import Q
+from django.shortcuts import get_object_or_404, redirect, render
+from django.utils import timezone
+
+from quiz.forms.quiz_forms import QuizAttemptForm
+from quiz.models import Quiz, QuizAttempt, Question, Choice, Answer
+
 
 def start_quiz(request, pk):
     quiz = get_object_or_404(Quiz, pk=pk)
@@ -12,6 +19,7 @@ def start_quiz(request, pk):
     else:
         form = QuizAttemptForm()
     return render(request, 'quiz/start_quiz.html', {'quiz': quiz, 'form': form})
+
 
 def take_quiz(request, attempt_id):
     attempt = get_object_or_404(QuizAttempt, id=attempt_id, whizzer=request.user)
@@ -58,6 +66,7 @@ def take_quiz(request, attempt_id):
         'time_left': int(time_left),
     }
     return render(request, 'quiz/take_quiz.html', context)
+
 
 def quiz_result(request, attempt_id):
     attempt = get_object_or_404(QuizAttempt, id=attempt_id, whizzer=request.user)
