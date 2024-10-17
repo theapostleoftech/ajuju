@@ -1,7 +1,7 @@
 from django import forms
 
 from core.forms import BaseFormMixin
-from quiz.models import Choice, Question, Quiz
+from quiz.models import Choice, Question, Quiz, QuizAttempt
 
 
 class QuizForm(BaseFormMixin, forms.ModelForm):
@@ -25,10 +25,10 @@ class ChoiceForm(BaseFormMixin, forms.ModelForm):
         fields = ['text', 'is_correct']
 
 
-# class QuizAttemptForm(forms.ModelForm):
-#     class Meta:
-#         model = QuizAttempt
-#         fields = []  # We don't need any fields, as we'll set them programmatically
+class QuizAttemptForm(BaseFormMixin, forms.ModelForm):
+    class Meta:
+        model = QuizAttempt
+        fields = []  # We don't need any fields, as we'll set them programmatically
 
 ChoiceFormSet = forms.inlineformset_factory(
     Question, Choice, form=ChoiceForm, extra=4, can_delete=True, min_num=2, validate_min=True
