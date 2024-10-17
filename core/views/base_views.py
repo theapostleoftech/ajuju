@@ -50,6 +50,16 @@ class WhizzerBaseListView(ListView):
 
 
 @method_decorator([login_required, whizzer_required], name='dispatch')
+class WhizzerBaseDetailView(UpdateView):
+    """
+    This is the base view for details of an object.
+    """
+
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args, **kwargs)
+
+
+@method_decorator([login_required, whizzer_required], name='dispatch')
 class WhizzerBaseDeleteView(DeleteView):
     """
     This is the base view for deleting a whizzer object.
