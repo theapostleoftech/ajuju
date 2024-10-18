@@ -13,7 +13,7 @@ def start_quiz(request, pk):
         if form.is_valid():
             attempt = form.save(commit=False)
             attempt.quiz = quiz
-            attempt.whizzer = request.user
+            attempt.whizzer = request.user.student
             attempt.save()
             return redirect('take_quiz', attempt_id=attempt.id)
     else:

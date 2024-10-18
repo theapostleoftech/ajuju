@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Start Quiz - {{ quiz.title }}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+
+    <!-- Main container -->
+    <div class="max-w-3xl mx-auto p-6 bg-white shadow-lg rounded-lg mt-10">
+        <!-- Quiz Title -->
+        <div class="text-center mb-6">
+            <h1 class="text-3xl font-bold text-gray-900">{{ quiz.title }}</h1>
+            <p class="text-gray-500 mt-2">{{ quiz.description }}</p>
+        </div>
+
+        <!-- Quiz Details -->
+        <div class="mb-6">
+            <h2 class="text-xl font-semibold text-gray-800">Quiz Information</h2>
+            <ul class="list-disc ml-5 text-gray-600">
+                <li><strong>Subject:</strong> {{ quiz.subject.name }}</li>
+                <li><strong>Time Limit:</strong> {{ quiz.get_time_limit_display }}</li>
+            </ul>
+        </div>
+
+        <!-- Start Quiz Form -->
+        <form method="post" class="mt-8 space-y-6">
+            {% csrf_token %}
+            
+            <!-- Form Errors -->
+            {% if form.errors %}
+                <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative">
+                    <strong class="font-bold">Oops!</strong> Something went wrong:
+                    <ul class="mt-2 list-disc pl-4">
+                        {% for field in form %}
+                            {% for error in field.errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+
+            <!-- Quiz Form Fields -->
+            <div class="space-y-4">
+                {{ form.as_p }}
+            </div>
+
+            <!-- Start Quiz Button -->
+            <div>
+                <button type="submit" class="w-full bg-blue-600 text-white font-bold py-2 px-4 rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
+                    Start Quiz
+                </button>
+            </div>
+        </form>
+
+        <!-- Back to Dashboard Button -->
+        <div class="mt-6 text-center">
+            <a href="{% url 'students:whizzer_dashboard' %}" class="text-blue-500 hover:text-blue-700">Back to Dashboard</a>
+        </div>
+    </div>
+
+</body>
+</html>

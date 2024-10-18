@@ -30,6 +30,15 @@ class QuizAttemptForm(BaseFormMixin, forms.ModelForm):
         model = QuizAttempt
         fields = []  # We don't need any fields, as we'll set them programmatically
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['confirm'] = forms.BooleanField(
+            required=True,
+            label="I'm ready to start the quiz",
+            widget=forms.CheckboxInput(attrs={'class': 'form-check-input'})
+        )
+
+
 ChoiceFormSet = forms.inlineformset_factory(
     Question, Choice, form=ChoiceForm, extra=4, can_delete=True, min_num=2, validate_min=True
 )

@@ -12,7 +12,7 @@
                     <h2 class="text-xl text-light-50 font-semibold mb-2">{{ quiz.title }}</h2>
                     <p class="text-light-600 mb-4">{{ quiz.description|truncatewords:20 }}</p>
                     <p class="text-sm text-light-500 mb-2">Subject: {{ quiz.subject.name }}</p>
-                    <p class="text-sm text-light-500 mb-4">Time Limit: {{ quiz.time_limit }} seconds</p>
+                    <p class="text-sm text-light-500 mb-4">Time Limit: {{ quiz.get_time_limit_display }}</p>
                     <a href="{% url 'students:whizzer_quiz_detail' quiz.id %}"
                        class="text-light-50 bg-primary-500 hover:bg-primary-700 focus:ring-4
 						focus:outline-none focus:ring-primary-300 font-medium rounded-xl text-sm px-5 py-3 text-center">View

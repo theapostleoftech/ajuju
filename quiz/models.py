@@ -3,6 +3,8 @@ This module contains the models for the quiz app.
 """
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
+from django.db.models import Case, When
+from django.forms import IntegerField
 from django.utils import timezone
 
 from core.models import BaseModel
@@ -66,6 +68,23 @@ class Quiz(BaseModel):
 
     def __str__(self):
         return self.title
+
+    def get_time_limit_display(self):
+        # Convert time limit to minutes or hours
+        if self.time_limit >= 3600:  # 1 hour or more
+            hours = self.time_limit // 3600
+            if hours == 1:
+                return f"{hours} hour"
+            else:
+                return f"{hours} hours"
+        elif self.time_limit >= 60:  # More than 1 minute
+            minutes = self.time_limit // 60
+            if minutes == 1:
+                return f"{minutes} minute"
+            else:
+                return f"{minutes} minutes"
+        else:
+            return f"{self.time_limit} second(s)"
 
 
 class Question(BaseModel):
@@ -146,6 +165,46 @@ class QuizAttempt(BaseModel):
         if self.is_completed:
             return (self.end_time - self.start_time).total_seconds()
         return None
+
+    def calculate_score(self):
+        total_questions = self.quiz.questions.count()
+        correct_answers = self.answers.filter(selected_choice__is_correct=True).count()
+
+        # Calculate percentage
+        if total_questions > 0:
+            score_percentage = (correct_answers / total_questions) * 100
+        else:
+            score_percentage = 0
+
+        # Round to 2 decimal places
+        score_percentage = round(score_percentage, 2)
+
+        return score_percentage
+
+    def get_result_summary(self):
+        total_questions = self.quiz.questions.count()
+        answered_questions = self.answers.count()
+        correct_answers = self.answers.filter(selected_choice__is_correct=True).count()
+        incorrect_answers = answered_questions - correct_answers
+        unanswered_questions = total_questions - answered_questions
+
+        return {
+            'total_questions': total_questions,
+            'answered_questions': answered_questions,
+            'correct_answers': correct_answers,
+            'incorrect_answers': incorrect_answers,
+            'unanswered_questions': unanswered_questions,
+            'score': self.calculate_score(),
+        }
+
+    def get_question_breakdown(self):
+        return self.answers.annotate(
+            is_correct=Case(
+                When(selected_choice__is_correct=True, then=1),
+                default=0,
+                output_field=IntegerField(),
+            )
+        ).select_related('question', 'selected_choice')
 
 
 class Answer(BaseModel):
