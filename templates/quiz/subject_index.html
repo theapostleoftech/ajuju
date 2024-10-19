@@ -21,21 +21,44 @@
     </div>
 
     <div class="mt-8">
-    <h5 class="text-lg font-semibold mb-6 uppercase border-b-2 text-accent-900">Available Subjects</h5>
-
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {% for subject in subjects %}
-            <div class="bg-white rounded-lg shadow-md p-6">
-                <h2 class="text-xl font-semibold mb-2">{{ subject.name }}</h2>
-            <a href="{% url 'quiz:subject_update' subject.id %}"
-                   class="bg-primary-500 hover:bg-primary-700 text-light-50 font-bold py-2 px-4 rounded-xl">View Subject</a>
-            </div>
-        {% empty %}
-            <p class="col-span-3 text-center text-gray-500">No quizzes available at the moment.</p>
-        {% endfor %}
+        <h5 class="text-md font-medium capitalize text-accent-900">Available Subjects</h5>
+    <hr class="my-4 border-2 border-accent-500">
+        <div class="mt-8 relative overflow-x-auto sm:rounded-xl">
+            <table class="w-full text-sm text-left rtl:text-right text-gray-500">
+                <thead class="text-xs text-gray-700 uppercase bg-accent-50 dark:bg-gray-700">
+                <tr>
+                    <th scope="col" class="px-6 py-3">
+                        Name
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Description
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Action
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for subject in subjects %}
+                    <tr class="odd:bg-light-50 even:bg-accent-50 border-b">
+                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                            {{ subject.name }}
+                        </th>
+                        <td class="px-6 py-4">
+                            {{ subject.description }}
+                        </td>
+                        <td class="px-6 py-4">
+                            <a href="{% url 'quiz:subject_update' subject.id %}"
+                               class="font-medium text-primary-600 hover:bg-primary-700 hover:underline">Edit</a>
+                        </td>
+                    </tr>
+                {% empty %}
+                    <p class="col-span-3 text-center text-gray-500">No subjects available at the moment.</p>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
-
-</div>
 
 {% endblock content %}
 {% block footer_js %}{% endblock footer_js %}

@@ -1,0 +1,296 @@
+[
+    {
+        "model": "quiz.subject",
+        "pk": 1,
+        "fields": {
+            "id": "1e5b5ed4-62a1-4c58-9a43-6c7a22e7d80f",
+            "creator": "8d9011f2-171a-4868-a471-9ca8d0c60db1",
+            "name": "Mathematics",
+            "description": "A subject focusing on numbers and calculations.",
+            "created_at": "2024-10-01T10:00:00Z",
+            "updated_at": "2024-10-01T10:00:00Z"
+        }
+    },
+    {
+        "model": "quiz.subject",
+        "pk": 2,
+        "fields": {
+            "id": "d9c43b3e-3a8a-4c34-bbb1-d74c391bb0f3",
+            "creator": "8d9011f2-171a-4868-a471-9ca8d0c60db1",
+            "name": "Science",
+            "description": "A subject exploring the natural world and scientific principles.",
+            "created_at": "2024-10-01T10:00:00Z",
+            "updated_at": "2024-10-01T10:00:00Z"
+        }
+    },
+    {
+        "model": "quiz.quiz",
+        "pk": 1,
+        "fields": {
+            "id": "3e5b5e25-0f78-42c3-bb6e-bc4c6eaf27e0",
+            "title": "Algebra Basics",
+            "description": "An introductory quiz on algebra.",
+            "subject": 1,
+            "creator": 1,
+            "time_limit": 600,
+            "is_active": true,
+            "created_at": "2024-10-01T10:00:00Z",
+            "updated_at": "2024-10-01T10:00:00Z"
+        }
+    },
+    {
+        "model": "quiz.quiz",
+        "pk": 2,
+        "fields": {
+            "id": "a8c8b33c-f69a-4e5c-8f1f-e3d76b02da10",
+            "title": "Basic Physics",
+            "description": "A quiz on fundamental physics concepts.",
+            "subject": 2,
+            "creator": 1,
+            "time_limit": 900,
+            "is_active": true,
+            "created_at": "2024-10-01T10:00:00Z",
+            "updated_at": "2024-10-01T10:00:00Z"
+        }
+    },
+    {
+        "model": "quiz.question",
+        "pk": 1,
+        "fields": {
+            "id": "c7d4bb5e-7d76-4f57-944f-e7a82eac7a3d",
+            "quiz": 1,
+            "text": "What is 2 + 2?",
+            "order": 1,
+            "created_at": "2024-10-01T10:00:00Z",
+            "updated_at": "2024-10-01T10:00:00Z"
+        }
+    },
+    {
+        "model": "quiz.question",
+        "pk": 2,
+        "fields": {
+            "id": "e6d5b1b8-d632-4e1a-bfee-7409b0b79c7d",
+            "quiz": 1,
+            "text": "What is the square root of 16?",
+            "order": 2,
+            "created_at": "2024-10-01T10:00:00Z",
+            "updated_at": "2024-10-01T10:00:00Z"
+        }
+    },
+    {
+        "model": "quiz.question",
+        "pk": 3,
+        "fields": {
+            "id": "3f0d5b38-d8f1-46ae-8c8a-77e9310ff052",
+            "quiz": 2,
+            "text": "What is Newton's second law?",
+            "order": 1,
+            "created_at": "2024-10-01T10:00:00Z",
+            "updated_at": "2024-10-01T10:00:00Z"
+        }
+    },
+    {
+        "model": "quiz.question",
+        "pk": 4,
+        "fields": {
+            "id": "fa50e40b-fbc9-4bc2-9ac9-5c2873bc2393",
+            "quiz": 2,
+            "text": "What is the formula for gravitational force?",
+            "order": 2,
+            "created_at": "2024-10-01T10:00:00Z",
+            "updated_at": "2024-10-01T10:00:00Z"
+        }
+    },
+    {
+        "model": "quiz.choice",
+        "pk": 1,
+        "fields": {
+            "id": "19e4aa9c-92f4-471b-b4cf-34c6c3990e09",
+            "question": 1,
+            "text": "3",
+            "is_correct": false,
+            "created_at": "2024-10-01T10:00:00Z",
+            "updated_at": "2024-10-01T10:00:00Z"
+        }
+    },
+    {
+        "model": "quiz.choice",
+        "pk": 2,
+        "fields": {
+            "id": "9c4b9f56-ecb3-4385-bb91-d4f0136bca16",
+            "question": 1,
+            "text": "4",
+            "is_correct": true,
+            "created_at": "2024-10-01T10:00:00Z",
+            "updated_at": "2024-10-01T10:00:00Z"
+        }
+    },
+    {
+        "model": "quiz.choice",
+        "pk": 3,
+        "fields": {
+            "id": "d40b0849-e290-48d5-9bbf-260aad2d4fc2",
+            "question": 1,
+            "text": "5",
+            "is_correct": false,
+            "created_at": "2024-10-01T10:00:00Z",
+            "updated_at": "2024-10-01T10:00:00Z"
+        }
+    },
+    {
+        "model": "quiz.choice",
+        "pk": 4,
+        "fields": {
+            "id": "3a7e13c1-8cf5-4cde-bdb0-4a2b882e6633",
+            "question": 1,
+            "text": "6",
+            "is_correct": false,
+            "created_at": "2024-10-01T10:00:00Z",
+            "updated_at": "2024-10-01T10:00:00Z"
+        }
+    },
+    {
+        "model": "quiz.choice",
+        "pk": 5,
+        "fields": {
+            "id": "af78b17e-b72a-4ab7-b776-603c56c0b36a",
+            "question": 2,
+            "text": "2",
+            "is_correct": false,
+            "created_at": "2024-10-01T10:00:00Z",
+            "updated_at": "2024-10-01T10:00:00Z"
+        }
+    },
+    {
+        "model": "quiz.choice",
+        "pk": 6,
+        "fields": {
+            "id": "57e881c2-1201-4e6e-86e3-53e2fcd5c816",
+            "question": 2,
+            "text": "4",
+            "is_correct": true,
+            "created_at": "2024-10-01T10:00:00Z",
+            "updated_at": "2024-10-01T10:00:00Z"
+        }
+    },
+    {
+        "model": "quiz.choice",
+        "pk": 7,
+        "fields": {
+            "id": "9b36cd57-7a74-431c-baa5-5e0a0e8bc17f",
+            "question": 2,
+            "text": "8",
+            "is_correct": false,
+            "created_at": "2024-10-01T10:00:00Z",
+            "updated_at": "2024-10-01T10:00:00Z"
+        }
+    },
+    {
+        "model": "quiz.choice",
+        "pk": 8,
+        "fields": {
+            "id": "42cc0b6a-5276-4eeb-a69b-ff4c9377e573",
+            "question": 2,
+            "text": "10",
+            "is_correct": false,
+            "created_at": "2024-10-01T10:00:00Z",
+            "updated_at": "2024-10-01T10:00:00Z"
+        }
+    },
+    {
+        "model": "quiz.choice",
+        "pk": 9,
+        "fields": {
+            "id": "5c53e550-374b-4c06-91ff-64c216bade34",
+            "question": 3,
+            "text": "F=ma",
+            "is_correct": true,
+            "created_at": "2024-10-01T10:00:00Z",
+            "updated_at": "2024-10-01T10:00:00Z"
+        }
+    },
+    {
+        "model": "quiz.choice",
+        "pk": 10,
+        "fields": {
+            "id": "c3d0b455-5f93-4b79-bd99-cbd33da764f1",
+            "question": 3,
+            "text": "E=mc^2",
+            "is_correct": false,
+            "created_at": "2024-10-01T10:00:00Z",
+            "updated_at": "2024-10-01T10:00:00Z"
+        }
+    },
+    {
+        "model": "quiz.choice",
+        "pk": 11,
+        "fields": {
+            "id": "b9a8b99a-b54f-4b49-899b-9cb7c54e60fc",
+            "question": 3,
+            "text": "PV=nRT",
+            "is_correct": false,
+            "created_at": "2024-10-01T10:00:00Z",
+            "updated_at": "2024-10-01T10:00:00Z"
+        }
+    },
+    {
+        "model": "quiz.choice",
+        "pk": 12,
+        "fields": {
+            "id": "4f442b89-823f-4425-bce1-6b1c4b646b36",
+            "question": 3,
+            "text": "a=F/m",
+            "is_correct": false,
+            "created_at": "2024-10-01T10:00:00Z",
+            "updated_at": "2024-10-01T10:00:00Z"
+        }
+    },
+    {
+        "model": "quiz.choice",
+        "pk": 13,
+        "fields": {
+            "id": "fcaafe34-60ae-40cb-b74f-1f8e8c3b4e95",
+            "question": 4,
+            "text": "F=G(m1*m2)/r^2",
+            "is_correct": true,
+            "created_at": "2024-10-01T10:00:00Z",
+            "updated_at": "2024-10-01T10:00:00Z"
+        }
+    },
+    {
+        "model": "quiz.choice",
+        "pk": 14,
+        "fields": {
+            "id": "77de24ec-54e3-46b1-bf79-4cdb8f56b56a",
+            "question": 4,
+            "text": "E=mc^2",
+            "is_correct": false,
+            "created_at": "2024-10-01T10:00:00Z",
+            "updated_at": "2024-10-01T10:00:00Z"
+        }
+    },
+    {
+        "model": "quiz.choice",
+        "pk": 15,
+        "fields": {
+            "id": "c4c75a99-2b46-44a8-bc8b-0740664c370c",
+            "question": 4,
+            "text": "v=d/t",
+            "is_correct": false,
+            "created_at": "2024-10-01T10:00:00Z",
+            "updated_at": "2024-10-01T10:00:00Z"
+        }
+    },
+    {
+        "model": "quiz.choice",
+        "pk": 16,
+        "fields": {
+            "id": "2f542682-0e3b-4c90-b9f4-d70ae82bc1eb",
+            "question": 4,
+            "text": "P=IV",
+            "is_correct": false,
+            "created_at": "2024-10-01T10:00:00Z",
+            "updated_at": "2024-10-01T10:00:00Z"
+        }
+    }
+]

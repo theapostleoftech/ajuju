@@ -30,16 +30,18 @@
                                 </button>
                             </div>
                             <!-- Render Question Form -->
-                            {{ question_form.as_p }}
+{#                            {{ question_form.as_p }}#}
+                         {% include 'quiz/quiz_forms/create_quiz_question_form.html' %}
 
                             <div class="mt-4 choices-container">
                                 <!-- Render Choice Forms -->
                                 {% for choice_form in choice_forms %}
                                     <div class="mb-2">
-                                        {#                                        {{ choice_form.as_p }}#}
-                                        <label class="block py-2.5 px-0 w-full text-sm text-accent-900 bg-transparent border-0 border-b-2 border-accent-300 appearance-none focus:outline-none focus:ring-0 focus:border-accent-600 peer">
-                                            {{ choice_form.is_correct }} Correct
-                                        </label>
+                                     {% include 'quiz/quiz_forms/create_quiz_choice_form.html' %}
+{#                                                                                {{ choice_form.as_p }}#}
+{#                                        <label class="block py-2.5 px-0 w-full text-sm text-accent-900 bg-transparent border-0 border-b-2 border-accent-300 appearance-none focus:outline-none focus:ring-0 focus:border-accent-600 peer">#}
+{#                                            {{ choice_form.is_correct }} Correct#}
+{#                                        </label>#}
                                     </div>
                                 {% endfor %}
                             </div>

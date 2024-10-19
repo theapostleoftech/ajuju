@@ -1,15 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Start Quiz - {{ quiz.title }}</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-gray-100">
-
-    <!-- Main container -->
-    <div class="max-w-3xl mx-auto p-6 bg-white shadow-lg rounded-lg mt-10">
+{% extends 'layouts/base_dashboard.html' %}
+{% load static widget_tweaks custom_filters %}
+{% block title %}Quiz Result{% endblock title %}
+{% block css %}{% endblock css %}
+{% block head_js %}{% endblock head_js %}
+{% block head %}{% endblock %}
+{% block content %}
+    <div class="max-w-3xl mx-auto p-6 mt-10">
         <!-- Quiz Title -->
         <div class="text-center mb-6">
             <h1 class="text-3xl font-bold text-gray-900">{{ quiz.title }}</h1>
@@ -28,7 +24,7 @@
         <!-- Start Quiz Form -->
         <form method="post" class="mt-8 space-y-6">
             {% csrf_token %}
-            
+
             <!-- Form Errors -->
             {% if form.errors %}
                 <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative">
@@ -50,17 +46,13 @@
 
             <!-- Start Quiz Button -->
             <div>
-                <button type="submit" class="w-full bg-blue-600 text-white font-bold py-2 px-4 rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
+                <button type="submit"
+                        class="text-light-50 bg-primary-500 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-xl text-sm px-5 py-3 text-center">
                     Start Quiz
                 </button>
             </div>
         </form>
-
-        <!-- Back to Dashboard Button -->
-        <div class="mt-6 text-center">
-            <a href="{% url 'students:whizzer_dashboard' %}" class="text-blue-500 hover:text-blue-700">Back to Dashboard</a>
-        </div>
     </div>
 
-</body>
-</html>
+{% endblock content %}
+{% block footer_js %}{% endblock footer_js %}
