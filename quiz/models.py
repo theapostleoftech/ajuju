@@ -97,15 +97,15 @@ class Question(BaseModel):
         related_name='questions'
     )
     text = models.TextField()
-    order = models.PositiveIntegerField(
-        default=0
-    )
+    # order = models.PositiveIntegerField(
+    #     default=0
+    # )
 
     class Meta:
-        ordering = ['order']
+        ordering = ['created_at']
 
     def __str__(self):
-        return f"{self.quiz.title} - Question {self.order}"
+        return f"{self.quiz.title} - {self.text[:50]}"
 
 
 class Choice(BaseModel):

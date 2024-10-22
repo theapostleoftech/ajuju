@@ -16,7 +16,7 @@ class QuizForm(BaseFormMixin, forms.ModelForm):
 class QuestionForm(BaseFormMixin, forms.ModelForm):
     class Meta:
         model = Question
-        fields = ['text', 'order']
+        fields = ['text',]
 
 
 class ChoiceForm(BaseFormMixin, forms.ModelForm):

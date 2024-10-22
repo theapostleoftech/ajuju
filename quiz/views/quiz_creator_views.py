@@ -207,11 +207,11 @@ class QuizDeleteView(CreatorBaseDeleteView):
     success_url = reverse_lazy('quiz:quiz_index')
     template_name = 'quiz/quiz_confirm_delete.html'
 
-    def delete(self, request, *args, **kwargs):
-        try:
-            response = super().delete(request, *args, **kwargs)
-            messages.success(self.request, "Quiz deleted successfully.")
-            return response
-        except Exception as e:
-            messages.error(self.request, f"An error occurred: {str(e)}")
-            return redirect(self.success_url)
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        messages.success(self.request, "The quiz was deleted successfully.")
+        return response
+
+    def form_invalid(self, form):
+        messages.error(self.request, "There was an error deleting the quiz.")
+        return super().form_invalid(form)
