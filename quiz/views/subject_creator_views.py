@@ -3,7 +3,7 @@ This module contains the views for the quiz subjects.
 """
 from django.contrib import messages
 from django.http import HttpResponseForbidden
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView
 
@@ -77,3 +77,12 @@ class SubjectDeleteView(CreatorBaseDeleteView):
     model = Subject
     success_url = reverse_lazy('quiz:subject_index')
     template_name = 'quiz/subject_confirm_delete.html'
+
+    def delete(self, request, *args, **kwargs):
+        try:
+            response = super().delete(request, *args, **kwargs)
+            messages.success(self.request, "Subject deleted successfully.")
+            return response
+        except Exception as e:
+            messages.error(self.request, f"An error occurred: {str(e)}")
+            return redirect(self.success_url)
