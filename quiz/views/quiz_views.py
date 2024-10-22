@@ -11,7 +11,7 @@ class SubjectIndexView(CreatorBaseListView):
     model = Quiz
     template_name = 'quiz/subject_index.html'
     context_object_name = 'subjects'
-    paginate_by = 10  # Number of items per page
+    paginate_by = 4  # Number of items per page
 
     def get_queryset(self):
         return Subject.objects.filter(creator=self.request.user.teacher)
@@ -42,7 +42,7 @@ class QuizIndexView(CreatorBaseListView):
     model = Quiz
     template_name = 'quiz/quiz_index.html'
     context_object_name = 'quizzes'
-    paginate_by = 10
+    paginate_by = 4
 
     def get_queryset(self):
         return Quiz.objects.filter(creator=self.request.user.teacher)

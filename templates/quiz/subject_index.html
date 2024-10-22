@@ -46,7 +46,7 @@
                                 {{ subject.name }}
                             </th>
                             <td class="px-6 py-4">
-                                {{ subject.description }}
+                                {{ subject.description|truncatewords_html:20 }}
                             </td>
                             <td class="px-6 py-4">
                                 <a href="{% url 'quiz:subject_update' subject.id %}"
