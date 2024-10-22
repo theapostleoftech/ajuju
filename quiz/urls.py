@@ -28,7 +28,7 @@ subject_creator_urlpatterns = [
     # path('subjects/<int:pk>/', views.SubjectDetailView.as_view(), name='subject_detail'),
     path('subjects/new/', subject_creator_views.SubjectCreateView.as_view(), name='subject_create'),
     path('subjects/update/<uuid:pk>/', subject_creator_views.SubjectUpdateView.as_view(), name='subject_update'),
-    path('subjects/<int:pk>/delete/', subject_creator_views.SubjectDeleteView.as_view(), name='subject_delete'),
+    path('subjects/delete/<uuid:pk>/', subject_creator_views.SubjectDeleteView.as_view(), name='subject_delete'),
 
 ]
 

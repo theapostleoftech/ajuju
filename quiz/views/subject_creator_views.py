@@ -71,6 +71,9 @@ class SubjectUpdateView(CreatorBaseUpdateView):
 
 
 class SubjectDeleteView(CreatorBaseDeleteView):
+    """
+    This view is used to delete a subject.
+    """
     model = Subject
     success_url = reverse_lazy('quiz:subject_index')
     template_name = 'quiz/subject_confirm_delete.html'
