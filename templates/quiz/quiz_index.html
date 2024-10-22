@@ -71,5 +71,35 @@
         </div>
     </div>
 
+    <div class="mt-4">
+        <nav class="flex justify-center">
+            <ul class=" inline-flex -space-x-px text-base h-10">
+                {% if quizzes.has_previous %}
+                    <li>
+                        <a href="?page=1"
+                           class="rounded-l-xl flex items-center justify-center px-4 py-3 h-10 leading-tight text-accent-500 bg-accent-50 border border-accent-300 hover:bg-primary-100 hover:text-accent-700">First</a>
+                    </li>
+                    <li>
+                        <a href="?page={{ quizzes.previous_page_number }}"
+                           class="flex items-center justify-center px-4 py-3 h-10 leading-tight text-accent-500 bg-accent-50 border border-accent-300 hover:bg-primary-100 hover:text-accent-700">Previous</a>
+                    </li>
+                {% endif %}
+                <li>
+                    <span class="flex items-center justify-center px-4 py-3 h-10 leading-tight text-accent-500 bg-accent-50 border border-accent-300 hover:bg-primary-100 hover:text-accent-700">{{ quizzes.number }} of {{ quizzes.paginator.num_pages }}</span>
+                </li>
+                {% if quizzes.has_next %}
+                    <li>
+                        <a href="?page={{ quizzes.next_page_number }}"
+                           class="flex items-center justify-center px-4 py-3 h-10 leading-tight text-accent-500 bg-accent-50 border border-accent-300 hover:bg-primary-100 hover:text-accent-700">Next</a>
+                    </li>
+                    <li>
+                        <a href="?page={{ quizzes.paginator.num_pages }}"
+                           class="rounded-r-xl flex items-center justify-center px-4 py-3 h-10 leading-tight text-accent-500 bg-accent-50 border border-accent-300 hover:bg-primary-100 hover:text-accent-700">Last</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
+
 {% endblock content %}
 {% block footer_js %}{% endblock footer_js %}
