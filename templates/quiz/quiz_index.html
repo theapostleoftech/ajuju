@@ -19,22 +19,57 @@
             </a>
         </div>
     </div>
-    <h1 class="text-3xl font-bold mb-6">Available Quizzes</h1>
+    <div class="mt-8">
+        <h5 class="text-md font-medium capitalize text-accent-900">Available Quizzes</h5>
+        <hr class="my-4 border-2 border-accent-500">
+        <div class="mt-8 relative overflow-x-auto sm:rounded-xl">
+            {% if quizzes %}
+                <table class="w-full text-sm text-left rtl:text-right text-gray-500">
+                    <thead class="text-xs text-gray-700 uppercase bg-accent-50 dark:bg-gray-700">
+                    <tr>
+                        <th scope="col" class="px-6 py-3">
+                            Title
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Subject
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Description
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Action
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for quiz in quizzes %}
+                        <tr class="odd:bg-light-50 even:bg-accent-50 border-b">
+                            <th scope="row"
+                                class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                {{ quiz.title }}
+                            </th>
+                            <td class="px-6 py-4">
+                                {{ quiz.subject.name }}
+                            </td>
+                            <td class="px-6 py-4">
+                                {{ quiz.description|truncatewords:20 }}
+                            </td>
+                            <td class="px-6 py-4">
+                                <a href="{% url 'quiz:quiz_update' quiz.id %}"
+                                   class="font-medium text-primary-500 hover:underline">Edit</a>
+                            </td>
+                        </tr>
+                    {% empty %}
 
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {% for quiz in quizzes %}
-            <div class="bg-white rounded-lg shadow-md p-6">
-                <h2 class="text-xl font-semibold mb-2">{{ quiz.title }}</h2>
-                <p class="text-gray-600 mb-4">{{ quiz.description|truncatewords:20 }}</p>
-                <p class="text-sm text-gray-500 mb-2">Subject: {{ quiz.subject.name }}</p>
-                <p class="text-sm text-gray-500 mb-4">Time Limit: {{ quiz.time_limit }} seconds</p>
-                <a href="{% url 'quiz:quiz_update' quiz.id %}"
-                   class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">View Quiz</a>
-            </div>
-        {% empty %}
-            <p class="col-span-3 text-center text-gray-500">No quizzes available at the moment.</p>
-        {% endfor %}
+                    {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <p class="text-center mb-4 text-accent-500">No quiz available at the moment.</p>
+
+            {% endif %}
+        </div>
     </div>
-    
+
 {% endblock content %}
 {% block footer_js %}{% endblock footer_js %}

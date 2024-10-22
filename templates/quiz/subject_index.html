@@ -22,43 +22,83 @@
 
     <div class="mt-8">
         <h5 class="text-md font-medium capitalize text-accent-900">Available Subjects</h5>
-    <hr class="my-4 border-2 border-accent-500">
+        <hr class="my-4 border-2 border-accent-500">
         <div class="mt-8 relative overflow-x-auto sm:rounded-xl">
-            <table class="w-full text-sm text-left rtl:text-right text-gray-500">
-                <thead class="text-xs text-gray-700 uppercase bg-accent-50 dark:bg-gray-700">
-                <tr>
-                    <th scope="col" class="px-6 py-3">
-                        Name
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                        Description
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                        Action
-                    </th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for subject in subjects %}
-                    <tr class="odd:bg-light-50 even:bg-accent-50 border-b">
-                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                            {{ subject.name }}
+            {% if subjects %}
+                <table class="w-full text-sm text-left rtl:text-right text-gray-500">
+                    <thead class="text-xs text-gray-700 uppercase bg-accent-50 dark:bg-gray-700">
+                    <tr>
+                        <th scope="col" class="px-6 py-3">
+                            Name
                         </th>
-                        <td class="px-6 py-4">
-                            {{ subject.description }}
-                        </td>
-                        <td class="px-6 py-4">
-                            <a href="{% url 'quiz:subject_update' subject.id %}"
-                               class="font-medium text-primary-500 hover:underline">Edit</a>
-                        </td>
+                        <th scope="col" class="px-6 py-3">
+                            Description
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Action
+                        </th>
                     </tr>
-                {% empty %}
-                    <p class="col-span-3 text-center text-gray-500">No subjects available at the moment.</p>
-                {% endfor %}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                    {% for subject in subjects %}
+                        <tr class="odd:bg-light-50 even:bg-accent-50 border-b">
+                            <th scope="row"
+                                class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                {{ subject.name }}
+                            </th>
+                            <td class="px-6 py-4">
+                                {{ subject.description }}
+                            </td>
+                            <td class="px-6 py-4">
+                                <a href="{% url 'quiz:subject_update' subject.id %}"
+                                   class="font-medium text-primary-500 hover:underline">Edit</a>
+                            </td>
+                        </tr>
+                    {% empty %}
+
+                    {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <p class="text-center mb-4 text-accent-500">No subjects available at the moment.</p>
+
+            {% endif %}
         </div>
     </div>
+
+    <div class="mt-4">
+        <nav class="flex justify-center">
+            <ul class=" inline-flex -space-x-px text-base h-10">
+                {% if subjects.has_previous %}
+                    <li>
+                        <a href="?page=1"
+                           class="rounded-l-xl flex items-center justify-center px-4 py-3 h-10 leading-tight text-accent-500 bg-accent-50 border border-accent-300 hover:bg-primary-100 hover:text-accent-700">First</a>
+                    </li>
+                    <li>
+                        <a href="?page={{ subjects.previous_page_number }}"
+                           class="flex items-center justify-center px-4 py-3 h-10 leading-tight text-accent-500 bg-accent-50 border border-accent-300 hover:bg-primary-100 hover:text-accent-700">Previous</a>
+                    </li>
+                {% endif %}
+                <li>
+                    <span class="flex items-center justify-center px-4 py-3 h-10 leading-tight text-accent-500 bg-accent-50 border border-accent-300 hover:bg-primary-100 hover:text-accent-700">{{ subjects.number }} of {{ subjects.paginator.num_pages }}</span>
+                </li>
+                {% if subjects.has_next %}
+                    <li>
+                        <a href="?page={{ subjects.next_page_number }}"
+                           class="flex items-center justify-center px-4 py-3 h-10 leading-tight text-accent-500 bg-accent-50 border border-accent-300 hover:bg-primary-100 hover:text-accent-700">Next</a>
+                    </li>
+                    <li>
+                        <a href="?page={{ subjects.paginator.num_pages }}"
+                           class="rounded-r-xl flex items-center justify-center px-4 py-3 h-10 leading-tight text-accent-500 bg-accent-50 border border-accent-300 hover:bg-primary-100 hover:text-accent-700">Last</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
+           
+
+
+
 
 {% endblock content %}
 {% block footer_js %}{% endblock footer_js %}
