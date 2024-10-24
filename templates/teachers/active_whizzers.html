@@ -1,0 +1,27 @@
+<!-- ajuju/templates/active_whizzers.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Active Whizzers</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 p-8">
+<div class="container mx-auto">
+    <h1 class="text-2xl font-bold">Active Whizzers</h1>
+    <p id="active-whizzers-count">Active Whizzers: {{ active_whizzers_count }}</p>
+
+    <script>
+        var socket = new WebSocket('ws://' + window.location.host + '/ws/creators/active_whizzer/');
+        
+        socket.onmessage = function (event) {
+            var data = JSON.parse(event.data);  // Parse the JSON data
+            if (data.type === 'active_whizzers_count') {
+                document.getElementById('active-whizzers-count').textContent = 'Active Whizzers: ' + data.count;
+            }
+        };
+    </script>
+</div>
+</body>
+</html>
