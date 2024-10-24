@@ -1,4 +1,5 @@
 from django import forms
+from django.forms import modelformset_factory
 
 from core.forms import BaseFormMixin
 from quiz.models import Choice, Question, Quiz, QuizAttempt
@@ -16,7 +17,7 @@ class QuizForm(BaseFormMixin, forms.ModelForm):
 class QuestionForm(BaseFormMixin, forms.ModelForm):
     class Meta:
         model = Question
-        fields = ['text',]
+        fields = ['text', ]
 
 
 class ChoiceForm(BaseFormMixin, forms.ModelForm):
@@ -39,10 +40,5 @@ class QuizAttemptForm(BaseFormMixin, forms.ModelForm):
         )
 
 
-ChoiceFormSet = forms.inlineformset_factory(
-    Question, Choice, form=ChoiceForm, extra=4, can_delete=True, min_num=2, validate_min=True
-)
-
-QuestionFormSet = forms.inlineformset_factory(
-    Quiz, Question, form=QuestionForm, extra=1, can_delete=True
-)
+QuestionFormSet = modelformset_factory(Question, fields=['text'], extra=1)
+ChoiceFormSet = modelformset_factory(Choice, fields=['text', 'is_correct'], extra=1)

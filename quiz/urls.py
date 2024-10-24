@@ -18,8 +18,8 @@ quiz_urlpatterns = [
 ]
 
 quiz_creator_urlpatterns = [
-    path('quiz/new/', quiz_creator_views.QuizCreateWizard.as_view(), name='quiz_create'),
-    path('quiz/update/<uuid:pk>/', quiz_creator_views.QuizUpdateView.as_view(), name='quiz_update'),
+    path('quiz/new/', quiz_creator_views.create_quiz_view, name='quiz_create'),
+    path('quiz/update/<quiz_id>/', quiz_creator_views.edit_quiz_view, name='quiz_update'),
     path('quiz/delete/<uuid:pk>/', quiz_creator_views.QuizDeleteView.as_view(), name='quiz_delete'),
 ]
 

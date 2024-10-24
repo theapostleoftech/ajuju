@@ -172,7 +172,7 @@ class QuizAttempt(BaseModel):
 
         # Calculate percentage
         if total_questions > 0:
-            score_percentage = (correct_answers / total_questions) * 100
+            score_percentage = (correct_answers / total_questions)
         else:
             score_percentage = 0
 

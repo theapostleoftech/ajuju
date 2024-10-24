@@ -24,3 +24,17 @@ class CreatorDashboardView(CreatorBaseTemplateView):
         return context
 
     pass
+
+
+class SampleView(CreatorBaseTemplateView):
+    """
+    This is the view for the creator dashboard.
+    """
+    template_name = 'teachers/sample.html'
+
+
+class NewView(CreatorBaseTemplateView):
+    """
+    This is the view for the creator dashboard.
+    """
+    template_name = 'teachers/new.html'

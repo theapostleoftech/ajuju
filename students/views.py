@@ -1,7 +1,10 @@
 """
 This file contains the views for the students app.
 """
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.db.models import Q
+from django.http import Http404
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
 
@@ -25,15 +28,6 @@ class WhizzerDashboardView(WhizzerBaseListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         return context
-
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     context['quiz_count'] = Quiz.objects.count()
-    #     context['active_whizzers_count'] = QuizAttempt.objects.filter(
-    #         start_time__gte=timezone.now() - timezone.timedelta(minutes=30),
-    #         end_time__isnull=True
-    #     ).values('whizzer').distinct().count()
-    #     return context
 
 
 class WhizzerQuizDetailView(WhizzerBaseDetailView):
@@ -63,38 +57,73 @@ def start_quiz(request, pk):
     return render(request, 'students/whizzer_start_quiz.html', {'quiz': quiz, 'form': form})
 
 
+@login_required
 def take_quiz(request, attempt_id):
     attempt = get_object_or_404(QuizAttempt, id=attempt_id, whizzer=request.user.student)
+
+    # Redirect if the attempt is completed
     if attempt.is_completed:
         return redirect('students:whizzer_quiz_result', attempt_id=attempt.id)
 
     if request.method == 'POST':
         question_id = request.POST.get('question_id')
         answer_id = request.POST.get('answer')
-        if question_id and answer_id:
-            question = get_object_or_404(Question, id=question_id, quiz=attempt.quiz)
-            choice = get_object_or_404(Choice, id=answer_id, question=question)
-            Answer.objects.update_or_create(
-                attempt=attempt, question=question,
-                defaults={'selected_choice': choice}
-            )
 
+        # Validate question and answer submission
+        if question_id and answer_id:
+            try:
+                question = get_object_or_404(Question, id=question_id, quiz=attempt.quiz)
+                choice = get_object_or_404(Choice, id=answer_id, question=question)
+
+                # Save the answer
+                Answer.objects.update_or_create(
+                    attempt=attempt, question=question,
+                    defaults={'selected_choice': choice}
+                )
+            except Http404:
+                messages.error(request, "Invalid question or answer.")
+                return redirect('students:whizzer_quiz', attempt_id=attempt.id)
+
+            # After saving the answer, retrieve the next question
+            question = attempt.quiz.questions.filter(
+                ~Q(id__in=attempt.answers.values_list('question__id', flat=True))
+            ).first()
+
+            # Check if there are no more questions
+            if not question:
+                attempt.end_time = timezone.now()
+                attempt.score = attempt.calculate_score()
+                attempt.save()
+                return redirect('students:whizzer_quiz_result', attempt_id=attempt.id)
+
+            # Prepare context for rendering the next question
+            context = {
+                'attempt': attempt,
+                'question': question,
+                'time_left': int(attempt.quiz.time_limit - (timezone.now() - attempt.start_time).total_seconds()),
+            }
+            return render(request, 'students/whizzer_take_quiz.html', context)
+
+        # Handle finishing the quiz
         if 'finish' in request.POST:
             attempt.end_time = timezone.now()
             attempt.score = attempt.calculate_score()
             attempt.save()
             return redirect('students:whizzer_quiz_result', attempt_id=attempt.id)
 
+    # If it's a GET request, retrieve the first question
     question = attempt.quiz.questions.filter(
         ~Q(id__in=attempt.answers.values_list('question__id', flat=True))
     ).first()
 
+    # Check if there are no more questions
     if not question:
         attempt.end_time = timezone.now()
         attempt.score = attempt.calculate_score()
         attempt.save()
         return redirect('students:whizzer_quiz_result', attempt_id=attempt.id)
 
+    # Check time left for the quiz
     time_left = attempt.quiz.time_limit - (timezone.now() - attempt.start_time).total_seconds()
     if time_left <= 0:
         attempt.end_time = timezone.now()
@@ -102,6 +131,7 @@ def take_quiz(request, attempt_id):
         attempt.save()
         return redirect('students:whizzer_quiz_result', attempt_id=attempt.id)
 
+    # Prepare context for rendering the quiz page
     context = {
         'attempt': attempt,
         'question': question,
