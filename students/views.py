@@ -144,17 +144,6 @@ def take_quiz(request, attempt_id):
     return render(request, 'students/whizzer_take_quiz.html', context)
 
 
-# @login_required
-# @whizzer_required
-# def quiz_result(request, attempt_id):
-#     attempt = get_object_or_404(QuizAttempt, id=attempt_id, whizzer=request.user.student)
-#     context = {
-#         'attempt': attempt,
-#         'answers': attempt.answers.all(),
-#     }
-#     return render(request, 'students/whizzer_quiz_result.html', context)
-
-
 @login_required
 @whizzer_required
 def quiz_result(request, attempt_id):
