@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'formtools',
     'anymail',
     'widget_tweaks',
+    'channels',
 ]
 
 MIDDLEWARE = [
@@ -155,4 +156,10 @@ ANYMAIL = {
     "MAILGUN_API_KEY": env('MAILGUN_API_KEY'),
     "MAILGUN_API_URL": "https://api.mailgun.net/v3/",
     "MAILGUN_SENDER_DOMAIN": "mail.the10x.tech"
+}
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels.layers.InMemoryChannelLayer',
+    },
 }
