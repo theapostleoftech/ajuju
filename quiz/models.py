@@ -3,9 +3,6 @@ This module contains the models for the quiz app.
 """
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
-from django.db.models import Case, When, Value
-from django.db.models.functions import Coalesce
-from django.forms import IntegerField
 from django.utils import timezone
 
 from core.models import BaseModel
@@ -169,26 +166,34 @@ class QuizAttempt(BaseModel):
         return None
 
     def calculate_score(self):
+        # Get the total number of questions in the quiz
         total_questions = self.quiz.questions.count()
+
+        # Get the number of correct answers
         correct_answers = self.answers.filter(selected_choice__is_correct=True).count()
 
-        # Calculate percentage
+        # Calculate the score as a percentage
         if total_questions > 0:
-            score_percentage = (correct_answers / total_questions)
+            score_percentage = (correct_answers / total_questions) * 100  # Convert to percentage
         else:
-            score_percentage = 0
+            score_percentage = 0  # No questions, score is 0
 
         # Round to 2 decimal places
-        score_percentage = round(score_percentage, 2)
+        return round(score_percentage, 2)
 
-        return score_percentage
+    def total_questions_percentage(self):
+        """Return the total questions as a percentage."""
+        total_questions = self.quiz.questions.count()
+        return 100.0 if total_questions > 0 else 0.0
 
     def get_result_summary(self):
         total_questions = self.quiz.questions.count()
         answered_questions = self.answers.count()
         correct_answers = self.answers.filter(selected_choice__is_correct=True).count()
-        incorrect_answers = answered_questions - correct_answers
-        unanswered_questions = total_questions - answered_questions
+
+        # Ensure no negative values
+        incorrect_answers = max(0, answered_questions - correct_answers)
+        unanswered_questions = max(0, total_questions - answered_questions)
 
         return {
             'total_questions': total_questions,
@@ -198,18 +203,6 @@ class QuizAttempt(BaseModel):
             'unanswered_questions': unanswered_questions,
             'score': self.calculate_score(),
         }
-
-    def get_question_breakdown(self):
-        return self.answers.annotate(
-            is_correct=Coalesce(
-                Case(
-                    When(selected_choice__is_correct=True, then=Value(1)),
-                    default=Value(0),
-                    output_field=IntegerField(),
-                ),
-                Value(0),  # Fallback value if no annotation is applied
-            )
-        ).select_related('question', 'selected_choice')
 
 
 class Answer(BaseModel):

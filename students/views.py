@@ -159,6 +159,8 @@ def take_quiz(request, attempt_id):
 @whizzer_required
 def quiz_result(request, attempt_id):
     attempt = get_object_or_404(QuizAttempt, id=attempt_id, whizzer=request.user.student)
+    score = attempt.calculate_score()
+    total_questions = attempt.total_questions_percentage()
 
     # Retrieve all answers along with the correct choice for each question
     answers = attempt.answers.all()
@@ -166,5 +168,7 @@ def quiz_result(request, attempt_id):
     context = {
         'attempt': attempt,
         'answers': answers,
+        'score': score,
+        'total_questions': total_questions,
     }
     return render(request, 'students/whizzer_quiz_result.html', context)
