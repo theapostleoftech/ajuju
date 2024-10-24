@@ -8,6 +8,7 @@ from django.http import Http404
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
 
+from ajuju.utils.decorators import whizzer_required
 from core.views.base_views import WhizzerBaseListView, WhizzerBaseDetailView
 from quiz.forms.quiz_forms import QuizAttemptForm
 from quiz.models import Quiz, QuizAttempt, Question, Choice, Answer
@@ -42,6 +43,8 @@ class WhizzerQuizDetailView(WhizzerBaseDetailView):
         return get_object_or_404(Quiz, pk=self.kwargs['pk'], is_active=True)
 
 
+@login_required
+@whizzer_required
 def start_quiz(request, pk):
     quiz = get_object_or_404(Quiz, pk=pk)
     if request.method == 'POST':
@@ -58,6 +61,7 @@ def start_quiz(request, pk):
 
 
 @login_required
+@whizzer_required
 def take_quiz(request, attempt_id):
     attempt = get_object_or_404(QuizAttempt, id=attempt_id, whizzer=request.user.student)
 
@@ -140,10 +144,27 @@ def take_quiz(request, attempt_id):
     return render(request, 'students/whizzer_take_quiz.html', context)
 
 
+# @login_required
+# @whizzer_required
+# def quiz_result(request, attempt_id):
+#     attempt = get_object_or_404(QuizAttempt, id=attempt_id, whizzer=request.user.student)
+#     context = {
+#         'attempt': attempt,
+#         'answers': attempt.answers.all(),
+#     }
+#     return render(request, 'students/whizzer_quiz_result.html', context)
+
+
+@login_required
+@whizzer_required
 def quiz_result(request, attempt_id):
     attempt = get_object_or_404(QuizAttempt, id=attempt_id, whizzer=request.user.student)
+
+    # Retrieve all answers along with the correct choice for each question
+    answers = attempt.answers.all()
+
     context = {
         'attempt': attempt,
-        'answers': attempt.answers.all(),
+        'answers': answers,
     }
     return render(request, 'students/whizzer_quiz_result.html', context)

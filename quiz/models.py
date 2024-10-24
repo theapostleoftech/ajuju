@@ -3,7 +3,8 @@ This module contains the models for the quiz app.
 """
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
-from django.db.models import Case, When
+from django.db.models import Case, When, Value
+from django.db.models.functions import Coalesce
 from django.forms import IntegerField
 from django.utils import timezone
 
@@ -97,6 +98,7 @@ class Question(BaseModel):
         related_name='questions'
     )
     text = models.TextField()
+
     # order = models.PositiveIntegerField(
     #     default=0
     # )
@@ -199,10 +201,13 @@ class QuizAttempt(BaseModel):
 
     def get_question_breakdown(self):
         return self.answers.annotate(
-            is_correct=Case(
-                When(selected_choice__is_correct=True, then=1),
-                default=0,
-                output_field=IntegerField(),
+            is_correct=Coalesce(
+                Case(
+                    When(selected_choice__is_correct=True, then=Value(1)),
+                    default=Value(0),
+                    output_field=IntegerField(),
+                ),
+                Value(0),  # Fallback value if no annotation is applied
             )
         ).select_related('question', 'selected_choice')
 

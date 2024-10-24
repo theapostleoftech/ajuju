@@ -9,29 +9,59 @@
     <!-- Main container -->
     <div class="max-w-3xl mx-auto p-6 mt-10">
 
-        <!-- Quiz Title and Result -->
-        <div class="text-center mb-6">
-            <h1 class="text-3xl font-bold text-accent-900">{{ attempt.quiz.title|upper }}</h1>
-            <p class="text-2xl text-accent-700 mt-2">You scored: <span
-                    class="text-primary-600">{{ attempt.score }} out of {{ attempt.quiz.questions.count }}</span></p>
-        </div>
+    <!-- Quiz Title and Result -->
+    <div class="text-center mb-6">
+        <h1 class="text-3xl font-bold text-accent-900">{{ attempt.quiz.title|upper }}</h1>
+        <p class="text-2xl text-accent-700 mt-2">You scored: <span
+                class="text-primary-600">{{ attempt.score }} out of {{ attempt.quiz.questions.count }}</span></p>
+    </div>
 
-        <!-- Answer Review -->
-        <div class="space-y-6">
+    <!-- Answer Review -->
+    {#        <div class="space-y-6">#}
+    {#            {% for answer in answers %}#}
+    {#                <div class="bg-gray-100 p-4 rounded-lg">#}
+    {#                    <h2 class="text-xl font-semibold text-gray-800">{{ answer.question.text }}</h2>#}
+    {#                    <p class="mt-2">#}
+    {#                        <strong>Your Answer:</strong> {{ answer.selected_choice.text }}<br>#}
+    {#                        <strong>Correct Answer:</strong> {{ answer.question.is_correct_choice.text }}#}
+    {#                    </p>#}
+    {#                    {% if answer.selected_choice == answer.question.is_correct_choice.text %}#}
+    {#                        <p class="mt-2 text-green-600">Correct!</p>#}
+    {#                    {% else %}#}
+    {#                        <p class="mt-2 text-red-600">Incorrect!</p>#}
+    {#                    {% endif %}#}
+    {#                </div>#}
+    {#            {% endfor %}#}
+    {#        </div>#}
+
+
+    <!-- Answer Review -->
+    <div class="space-y-6">
+        {% if answers %}
             {% for answer in answers %}
                 <div class="bg-gray-100 p-4 rounded-lg">
                     <h2 class="text-xl font-semibold text-gray-800">{{ answer.question.text }}</h2>
                     <p class="mt-2">
                         <strong>Your Answer:</strong> {{ answer.selected_choice.text }}<br>
-                        <strong>Correct Answer:</strong> {{ answer.question.correct_choice.text }}
+                        <strong>Correct Answer:</strong>
+                        {% for choice in answer.question.choices.all %}
+                            {% if choice.is_correct %}
+                                {{ choice.text }}
+                            {% endif %}
+                        {% endfor %}
                     </p>
-                    {% if answer.selected_choice == answer.question.correct_choice %}
+                    {% if answer.selected_choice.is_correct %}
                         <p class="mt-2 text-green-600">Correct!</p>
                     {% else %}
                         <p class="mt-2 text-red-600">Incorrect!</p>
                     {% endif %}
                 </div>
             {% endfor %}
+
+        {% else %}
+            <div class="bg-gray-100 p-4 rounded-lg">
+            <h2 class="text-xl font-semibold text-gray-800">No answers submitted</h2>
+        {% endif %}
         </div>
     </div>
 
