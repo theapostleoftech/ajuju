@@ -160,12 +160,6 @@ ANYMAIL = {
     "MAILGUN_SENDER_DOMAIN": "mail.the10x.tech"
 }
 
-# CHANNEL_LAYERS = {
-#     'default': {
-#         'BACKEND': 'channels.layers.InMemoryChannelLayer',
-#     },
-# }
-
 CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',

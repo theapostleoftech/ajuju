@@ -79,17 +79,3 @@ def active_whizzers_api(request):
         end_time__isnull=True
     ).values('whizzer__user')
     return JsonResponse(list(active_whizzers), safe=False)
-
-
-class SampleView(CreatorBaseTemplateView):
-    """
-    This is the view for the creator dashboard.
-    """
-    template_name = 'teachers/sample.html'
-
-
-class NewView(CreatorBaseTemplateView):
-    """
-    This is the view for the creator dashboard.
-    """
-    template_name = 'teachers/new.html'
