@@ -6,12 +6,12 @@
 {% block head %}{% endblock %}
 {% block content %}
 
-    <!-- Main container -->
-    <div class="max-w-3xl mx-auto p-6 mt-10">
+<h5 class="mb-4 text-md font-bold text-gray-700 uppercase bg-accent-50 border-b-4 border-accent-500 p-4 shadow-xl rounded-xl">
+    {{ attempt.quiz.title|title }} Result</h5>
+<div class="mx-auto p-6 mt-8">
 
     <!-- Quiz Title and Result -->
-    <div class="text-center mb-6">
-        <h1 class="text-3xl font-bold text-accent-900">{{ attempt.quiz.title|upper }}</h1>
+    <div class="bg-accent-50 p-6 rounded-xl text-center mb-6">
         <p class="text-2xl text-accent-700 mt-2">You scored: <span
                 class="text-primary-600">{{ score }} out of {{ total_questions }}</span></p>
     </div>
@@ -19,32 +19,31 @@
     <!-- Answer Review -->
     <div class="space-y-6">
         {% if answers %}
-            {% for answer in answers %}
-                <div class="bg-gray-100 p-4 rounded-lg">
-                    <h2 class="text-xl font-semibold text-gray-800">{{ answer.question.text }}</h2>
-                    <p class="mt-2">
-                        <strong>Your Answer:</strong> {{ answer.selected_choice.text }}<br>
-                        <strong>Correct Answer:</strong>
-                        {% for choice in answer.question.choices.all %}
-                            {% if choice.is_correct %}
-                                {{ choice.text }}
-                            {% endif %}
-                        {% endfor %}
-                    </p>
-                    {% if answer.selected_choice.is_correct %}
-                        <p class="mt-2 text-green-600">Correct!</p>
-                    {% else %}
-                        <p class="mt-2 text-red-600">Incorrect!</p>
-                    {% endif %}
-                </div>
-            {% endfor %}
+        {% for answer in answers %}
+        <div class="bg-accent-50 p-4 rounded-xl">
+            <h2 class="text-xl font-semibold text-gray-800">{{ answer.question.text }}</h2>
+            <p class="mt-2">
+                <strong>Your Answer:</strong> {{ answer.selected_choice.text }}<br>
+                <strong>Correct Answer:</strong>
+                {% for choice in answer.question.choices.all %}
+                {% if choice.is_correct %}
+                {{ choice.text }}
+                {% endif %}
+                {% endfor %}
+            </p>
+            {% if answer.selected_choice.is_correct %}
+            <p class="mt-2 text-green-600">Correct!</p>
+            {% else %}
+            <p class="mt-2 text-red-600">Incorrect!</p>
+            {% endif %}
+        </div>
+        {% endfor %}
 
         {% else %}
-            <div class="bg-gray-100 p-4 rounded-lg">
+        <div class="bg-accent-50 p-4 rounded-xl">
             <h2 class="text-xl font-semibold text-gray-800">No answers submitted</h2>
-        {% endif %}
+            {% endif %}
         </div>
     </div>
-
-{% endblock content %}
-{% block footer_js %}{% endblock footer_js %}
+    {% endblock content %}
+    {% block footer_js %}{% endblock footer_js %}

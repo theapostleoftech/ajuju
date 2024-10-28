@@ -1,19 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Take Quiz - {{ attempt.quiz.title }}</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-gray-100">
+{% extends 'layouts/base_dashboard.html' %}
+{% load static widget_tweaks custom_filters %}
+{% block title %}Take Quiz{% endblock title %}
+{% block css %}{% endblock css %}
+{% block head_js %}{% endblock head_js %}
+{% block head %}{% endblock %}
+{% block content %}
 
-<!-- Main container -->
-<div class="max-w-3xl mx-auto p-6 bg-white shadow-lg rounded-lg mt-10">
+<h5 class="mb-4 text-md font-bold text-gray-700 uppercase bg-accent-50 border-b-4 border-accent-500 p-4 shadow-xl rounded-xl">
+    {{ attempt.quiz.title|title }} in Progress</h5>
+<div class=" mx-auto p-6 bg-accent-50 shadow-lg rounded-lg mt-10">
 
     <!-- Quiz Title -->
     <div class="text-center mb-6">
-        <h1 class="text-3xl font-bold text-gray-900">{{ attempt.quiz.title }}</h1>
         <p class="text-gray-500 mt-2">Time Left: <span id="time-left"
                                                        class="text-red-500">{{ time_left }} seconds</span></p>
     </div>
@@ -25,16 +23,16 @@
 
         <!-- Current Question -->
         <div class="mb-6">
-            <h2 class="text-xl font-semibold text-gray-800">{{ question.text }}</h2>
+            <h4 class="text-sm font-medium text-accent-800">{{ question.text }}</h4>
             <ul class="list-none space-y-4 mt-4">
                 {% for choice in question.choices.all %}
-                    <li>
-                        <label class="flex items-center space-x-2">
-                            <input type="radio" name="answer" value="{{ choice.id }}"
-                                   class="form-radio h-5 w-5 text-blue-600" required>
-                            <span class="text-gray-800">{{ choice.text }}</span>
-                        </label>
-                    </li>
+                <li>
+                    <label class="flex items-center space-x-2">
+                        <input type="radio" name="answer" value="{{ choice.id }}"
+                               class="form-radio h-5 w-5 text-blue-600" required>
+                        <span class="text-gray-800">{{ choice.text }}</span>
+                    </label>
+                </li>
                 {% endfor %}
             </ul>
         </div>
@@ -42,11 +40,11 @@
         <!-- Next Question or Finish -->
         <div class="flex justify-between mt-6">
             <button type="submit"
-                    class="bg-blue-600 text-white font-bold py-2 px-4 rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
+                    class="text-light-50 bg-accent-500 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-xl text-sm px-5 py-3 text-center">
                 Next Question
             </button>
             <button type="submit" name="finish"
-                    class="bg-green-600 text-white font-bold py-2 px-4 rounded hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50">
+                    class="text-light-50 bg-primary-500 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-xl text-sm px-5 py-3 text-center">
                 Finish Quiz
             </button>
         </div>
@@ -56,7 +54,7 @@
 <!-- Timer script -->
 <script>
     const timeLeftElem = document.getElementById('time-left');
-    let timeLeft = {{ time_left }};
+    let timeLeft = {{time_left}};
     
     const timerInterval = setInterval(() => {
         timeLeft--;
@@ -70,5 +68,5 @@
     }, 1000);
 </script>
 
-</body>
-</html>
+{% endblock content %}
+{% block footer_js %}{% endblock footer_js %}

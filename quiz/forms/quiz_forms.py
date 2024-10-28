@@ -29,14 +29,14 @@ class ChoiceForm(BaseFormMixin, forms.ModelForm):
 class QuizAttemptForm(BaseFormMixin, forms.ModelForm):
     class Meta:
         model = QuizAttempt
-        fields = []  # We don't need any fields, as we'll set them programmatically
+        fields = []
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['confirm'] = forms.BooleanField(
             required=True,
             label="I'm ready to start the quiz",
-            widget=forms.CheckboxInput(attrs={'class': 'form-check-input'})
+            widget=forms.CheckboxInput(attrs={'class': 'form-check-input rounded-full'})
         )
 
 
