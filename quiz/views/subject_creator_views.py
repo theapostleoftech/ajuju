@@ -71,6 +71,18 @@ class SubjectUpdateView(CreatorBaseUpdateView):
 
 
 class SubjectDeleteView(CreatorBaseDeleteView):
+    """
+    This view is used to delete a subject.
+    """
     model = Subject
     success_url = reverse_lazy('quiz:subject_index')
     template_name = 'quiz/subject_confirm_delete.html'
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        messages.success(self.request, "Subject was deleted successfully.")
+        return response
+
+    def form_invalid(self, form):
+        messages.error(self.request, "There was an error deleting the subject.")
+        return super().form_invalid(form)

@@ -3,32 +3,36 @@
 {% load static %}
 
 {% block content %}
+    <h5 class="mb-4 text-md font-bold text-gray-700 uppercase bg-accent-50 border-b-4 border-accent-500 p-4 shadow-xl rounded-xl">
+        Dashboard</h5>
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
-        <div class="bg-tertiary-300 shadow-md rounded-xl h-32 md:h-64 p-4 flex flex-col justify-center items-center">
-            <h2 class="text-2xl font-bold text-blue-600">{{ quiz_count }}</h2>
-            <p class="text-gray-600">Quiz{{ quiz_count|pluralize }}</p>
+        <div class="bg-accent-500 rounded-xl h-32 md:h-64 p-4 flex flex-col justify-center items-center">
+            <h2 class="text-3xl font-bold text-light-100">{{ quiz_count }}</h2>
+            <p class="text-light-50">Quiz{{ quiz_count|pluralize }}</p>
         </div>
-        <div class="border-2 border-dashed rounded-lg border-gray-300 dark:border-gray-600 h-32 md:h-64 p-4 flex flex-col justify-center items-center">
-            <h2 class="text-2xl font-bold text-green-600">{{ subject_count }}</h2>
-            <p class="text-gray-600">Subject{{ subject_count|pluralize }}</p>
+        <div class="bg-primary-500 rounded-xl  h-32 md:h-64 p-4 flex flex-col justify-center items-center">
+            <h2 class="text-3xl font-bold text-light-100">{{ subject_count }}</h2>
+            <p class="text-light-50">Subject{{ subject_count|pluralize }}</p>
         </div>
-        <div class="border-2 border-dashed rounded-lg border-gray-300 dark:border-gray-600 h-32 md:h-64 p-4 flex flex-col justify-center items-center">
-            <h2 class="text-2xl font-bold text-purple-600">{{ active_whizzers_count }}</h2>
-            <p class="text-gray-600">Active Whizzers</p>
+        <div class="bg-tertiary-800 rounded-xl  h-32 md:h-64 p-4 flex flex-col justify-center items-center">
+            <h2 class="text-3xl font-bold text-light-100">{{ active_whizzers_count }}</h2>
+            <p class="text-light-50">Active Whizzers</p>
         </div>
+
     </div>
 
     <div class="mt-8">
-        <h5 class="text-lg font-semibold mb-6 uppercase border-b-2 text-accent-900">What do you want to do today?</h5>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4 mb-4">
+        <h5 class="text-xs text-gray-700 font-bold uppercase bg-accent-50 border-b-4 border-accent-500 p-4 shadow-xl rounded-xl">
+            What do you want to do today?</h5>
+        <div class="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4 mb-4">
 
-            <div class="bg-accent-800 shadow-md rounded-xl h-32 md:h-64 p-4 flex flex-col justify-center items-center">
+            <div class="bg-accent-800 rounded-xl h-32 md:h-64 p-4 flex flex-col justify-center items-center">
                 <a href="{% url 'quiz:quiz_create' %}"
                    class="bg-primary-500 hover:bg-primary-700 text-light-50 font-bold py-3.5 px-4 rounded-xl">
                     New Quiz
                 </a>
             </div>
-            <div class="bg-tertiary-500 shadow-md rounded-xl  h-32 md:h-64 p-4 flex flex-col justify-center items-center">
+            <div class="bg-tertiary-500 rounded-xl  h-32 md:h-64 p-4 flex flex-col justify-center items-center">
                 <a href="{% url 'quiz:subject_create' %}"
                    class="bg-primary-500 hover:bg-primary-700 text-light-50 font-bold py-3.5 px-4 rounded-xl">
                     New Subject

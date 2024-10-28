@@ -3,37 +3,24 @@
 {% load static %}
 
 {% block content %}
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
-        <div class="bg-tertiary-300 shadow-md rounded-xl h-32 md:h-64 p-4 flex flex-col justify-center items-center">
-            <h2 class="text-2xl font-bold text-blue-600">{{ quiz_count }}</h2>
-            <p class="text-gray-600">Quiz{{ quiz_count|pluralize }}</p>
-        </div>
-        <div class="border-2 border-dashed rounded-lg border-gray-300 dark:border-gray-600 h-32 md:h-64 p-4 flex flex-col justify-center items-center">
-            <h2 class="text-2xl font-bold text-green-600">{{ subject_count }}</h2>
-            <p class="text-gray-600">Subject{{ subject_count|pluralize }}</p>
-        </div>
-        <div class="border-2 border-dashed rounded-lg border-gray-300 dark:border-gray-600 h-32 md:h-64 p-4 flex flex-col justify-center items-center">
-            <h2 class="text-2xl font-bold text-purple-600">{{ active_whizzers_count }}</h2>
-            <p class="text-gray-600">Active Whizzers</p>
-        </div>
-    </div>
-
     <div class="mt-8">
-        <h5 class="text-lg font-semibold mb-6 uppercase border-b-2 text-accent-900">What do you want to do today?</h5>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4 mb-4">
-
-            <div class="bg-accent-800 shadow-md rounded-xl h-32 md:h-64 p-4 flex flex-col justify-center items-center">
-                <a href="{% url 'quiz:quiz_create' %}"
-                   class="bg-primary-500 hover:bg-primary-700 text-light-50 font-bold py-3.5 px-4 rounded-xl">
-                    New Quiz
-                </a>
-            </div>
-            <div class="bg-tertiary-500 shadow-md rounded-xl  h-32 md:h-64 p-4 flex flex-col justify-center items-center">
-                <a href="{% url 'quiz:subject_create' %}"
-                   class="bg-primary-500 hover:bg-primary-700 text-light-50 font-bold py-3.5 px-4 rounded-xl">
-                    New Subject
-                </a>
-            </div>
+        <h5 class="text-md font-medium capitalize text-accent-900">Quizzes</h5>
+        <hr class="my-4 border-2 border-accent-500">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {% for quiz in quizzes %}
+                <div class="bg-accent-900 rounded-xl shadow-md p-6">
+                    <h2 class="text-xl text-light-50 font-semibold mb-2">{{ quiz.title }}</h2>
+                    <p class="text-light-600 mb-4">{{ quiz.description|truncatewords:20 }}</p>
+                    <p class="text-sm text-light-500 mb-2">Subject: {{ quiz.subject.name }}</p>
+                    <p class="text-sm text-light-500 mb-4">Time Limit: {{ quiz.get_time_limit_display }}</p>
+                    <a href="{% url 'students:whizzer_quiz_detail' quiz.id %}"
+                       class="text-light-50 bg-primary-500 hover:bg-primary-700 focus:ring-4
+						focus:outline-none focus:ring-primary-300 font-medium rounded-xl text-sm px-5 py-3 text-center">View
+                        Quiz</a>
+                </div>
+            {% empty %}
+                <p class="col-span-3 text-center text-gray-500">No quizzes available at the moment.</p>
+            {% endfor %}
         </div>
 
     </div>

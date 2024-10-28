@@ -1,0 +1,83 @@
+{% extends 'layouts/base_dashboard.html' %}
+{% block title %}Creator Dashboard{% endblock %}
+{% load static %}
+{% block content %}
+    <div class="mt-8">
+        <h5 class="text-md font-medium capitalize text-accent-900">{{ active_whizzers_count }} Active Whizzer(s)</h5>
+        <hr class="my-4 border-2 border-accent-500">
+        <div class="mt-8 relative overflow-x-auto sm:rounded-xl">
+            {% if active_whizzers %}
+                <table class="w-full text-sm text-left rtl:text-right text-gray-500">
+                    <thead class="text-xs text-gray-700 uppercase bg-accent-50 dark:bg-gray-700">
+                    <tr>
+                        <th scope="col" class="px-6 py-3">User</th>
+                        <th scope="col" class="px-6 py-3">Ongoing Quiz</th>
+                        <th scope="col" class="px-6 py-3">Action</th>
+                    </tr>
+                    </thead>
+                    <tbody id="whizzers-list"> <!-- Add an ID to the tbody for easier access -->
+                    {% for whizzer in active_whizzers %}
+                        <tr class="odd:bg-light-50 even:bg-accent-50 border-b">
+                            <th scope="row"
+                                class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                {{ whizzer.username }}
+                            </th>
+                            <td class="px-6 py-4">{{ whizzer.quiz_title }}</td>
+                            <td class="px-6 py-4">{{ whizzer.time_left }} seconds</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <p class="text-center mb-4 text-accent-500">No whizzer available at the moment.</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <script>
+        const socket = new WebSocket('ws://' + window.location.host + '/ws/creators/active_whizzer/');
+        
+        socket.onopen = () => {
+            console.log('WebSocket connection established');
+        };
+        
+        socket.onmessage = (event) => {
+            const data = JSON.parse(event.data);
+            
+            if (data.type === 'active_whizzers_count') {
+                console.log('Active Whizzers Count:', data.count);
+            } else if (data.type === 'active_whizzers_details') {
+                console.log('Active Whizzers Details:', data.whizzers);
+                updateWhizzersTable(data.whizzers);
+            }
+        };
+        
+        socket.onerror = (error) => {
+            console.error('WebSocket error:', error);
+        };
+        
+        socket.onclose = (event) => {
+            console.log('WebSocket connection closed:', event);
+        };
+        
+        function updateWhizzersTable(whizzers) {
+            const whizzersList = document.getElementById('whizzers-list');
+            whizzersList.innerHTML = ''; // Clear existing rows
+            
+            whizzers.forEach(whizzer => {
+                const row = document.createElement('tr');
+                row.className = 'odd:bg-light-50 even:bg-accent-50 border-b';
+                row.innerHTML = `
+                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    ${whizzer.username}
+                </th>
+                <td class="px-6 py-4">${whizzer.quiz_title}</td>
+                <td class="px-6 py-4">${whizzer.time_left} seconds</td>
+            `;
+                whizzersList.appendChild(row);
+            });
+        }
+    </script>
+{% endblock content %}
+
+{% block footer_js %}{% endblock footer_js %}
