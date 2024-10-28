@@ -172,13 +172,18 @@ STORAGES = {
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Celery Configuration Options
-CELERY_TIMEZONE = timezone.get_current_timezone_name()
+CELERY_TIMEZONE = TIME_ZONE
+
 CELERY_TASK_TRACK_STARTED = True
+
 CELERY_TASK_TIME_LIMIT = 30 * 60
-CELERY_BROKER_URL = 'amqp://guest:guest@localhost'
-CELERY_ACCEPT_CONTENT = ['json']
-CELERY_RESULT_BACKEND = 'rpc://'  # 'db+sqlite:///results.sqlite'
-CELERY_TASK_SERIALIZER = 'json'
+
+# set the celery broker url
+CELERY_BROKER_URL = 'redis://localhost:6379/0'
+
+# set the celery result backend
+CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
+CELERY_CACHE_BACKEND = 'django-cache'
 
 LOGIN_URL = 'users:login'
 
