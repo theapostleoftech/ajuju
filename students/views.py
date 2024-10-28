@@ -100,7 +100,7 @@ def take_quiz(request, attempt_id):
                 attempt.save()
                 return redirect('students:whizzer_quiz_result', attempt_id=attempt.id)
 
-            # Prepare context for rendering the next question
+
             context = {
                 'attempt': attempt,
                 'question': question,
@@ -115,7 +115,6 @@ def take_quiz(request, attempt_id):
             attempt.save()
             return redirect('students:whizzer_quiz_result', attempt_id=attempt.id)
 
-    # If it's a GET request, retrieve the first question
     question = attempt.quiz.questions.filter(
         ~Q(id__in=attempt.answers.values_list('question__id', flat=True))
     ).first()
