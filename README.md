@@ -7,8 +7,7 @@
 ## Introduction
 
 Ajuju is an interactive quiz application that allows users who are teachers called creators to create quizzes for
-students who are Whizzers to take - Delivering convenience, one package at a time.
-
+students who are Whizzers to take.
 - **Deployed Site:** [http://ajuju.the10x.tech](http://ajuju.the10x.tech)
 
 ## Features
