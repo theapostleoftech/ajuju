@@ -40,5 +40,5 @@ class QuizAttemptForm(BaseFormMixin, forms.ModelForm):
         )
 
 
-QuestionFormSet = modelformset_factory(Question, fields=['text'], extra=1)
-ChoiceFormSet = modelformset_factory(Choice, fields=['text', 'is_correct'], extra=1)
+QuestionFormSet = modelformset_factory(Question, form=QuestionForm, extra=1)
+ChoiceFormSet = modelformset_factory(Choice, form=ChoiceForm, extra=1)

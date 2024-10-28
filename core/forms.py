@@ -18,5 +18,11 @@ class BaseFormMixin:
         """
         for field_name, field in self.fields.items():
             if field.widget:
-                field.widget.attrs.update(self.widget_attrs)
-                field.widget.attrs.update({'placeholder': f'Enter {field.label}'})
+                if field_name == 'is_correct':
+                    # Customize attributes for the 'is_correct' field
+                    field.widget.attrs.update({
+                        'class': 'form-check-input rounded-full',
+                        'id': f'{field_name}_id', })
+                else:
+                    field.widget.attrs.update(self.widget_attrs)
+                    field.widget.attrs.update({'placeholder': f'Enter {field.label}'})

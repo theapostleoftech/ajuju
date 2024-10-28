@@ -7,7 +7,7 @@
 {% block content %}
     <div class="container mx-auto p-6">
         <h1 class="text-3xl font-bold mb-6">Create a New Quiz</h1>
-        <form id="quiz-form" method="POST" class="px-8 pt-6 pb-8 mb-4">
+        <form id="quiz-form" method="POST" class="bg-accent-50 px-8 pt-6 pb-8 mb-4 rounded-xl">
             {% csrf_token %}
 
             <div class="mb-6">
@@ -19,8 +19,8 @@
                 <h2 class="text-xl font-semibold mb-2">Questions</h2>
                 {{ question_formset.management_form }}
                 {% for question_form in question_formset %}
-                    <div class="question-form mb-6 p-4 border border-gray-200 rounded">
-                        <h3 class="text-lg font-medium mb-2">Question {{ forloop.counter }}</h3>
+                    <div class="question-form mb-6 p-4 ">
+                        <h3 class="text-lg font-medium mb-2">Questions {{ forloop.counter }}</h3>
                         {{ question_form.as_p }}
 
                         <div class="choices-container mt-4">
@@ -33,7 +33,7 @@
                             {% endfor %}
                         </div>
                         <button type="button"
-                                class="add-choice-btn mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                                class="add-choice-btn mt-2 bg-primary-400 hover:bg-primary-700 text-white font-bold py-3 px-4 rounded-xl">
                             Add Choice
                         </button>
                     </div>
@@ -41,11 +41,11 @@
             </div>
 
             <button type="button" id="add-question-btn"
-                    class="mb-4 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+                    class="mb-4 bg-accent-500 hover:bg-primary-700 text-white font-bold py-3 px-4 rounded-xl">
                 Add Question
             </button>
 
-            <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+            <button type="submit" class="bg-primary-500 hover:bg-primary-700 text-white font-bold py-3 px-4 rounded-xl">
                 Create Quiz
             </button>
         </form>
@@ -56,19 +56,19 @@
             const questionsContainer = document.getElementById('questions-container');
             const addQuestionBtn = document.getElementById('add-question-btn');
             const totalQuestionFormsInput = document.getElementById('id_questions-TOTAL_FORMS');
-            
+
             let questionCounter = {{ question_formset.total_form_count }};
-            
+
             addQuestionBtn.addEventListener('click', function () {
                 const newQuestionForm = questionsContainer.querySelector('.question-form').cloneNode(true);
                 newQuestionForm.innerHTML = newQuestionForm.innerHTML.replace(/questions-(\d+)-/g, `questions-${questionCounter}-`);
-                
+
                 const questionTitle = newQuestionForm.querySelector('h3');
                 questionTitle.textContent = `Question ${questionCounter + 1}`;
-                
+
                 const choicesContainer = newQuestionForm.querySelector('.choices-container');
                 choicesContainer.innerHTML = choicesContainer.innerHTML.replace(/choices-(\d+)-/g, `choices-${questionCounter}-`);
-                
+
                 // Reset choice forms
                 const choiceForms = choicesContainer.querySelectorAll('.choice-form');
                 choiceForms.forEach((form, index) => {
@@ -76,42 +76,42 @@
                         form.remove();
                     }
                 });
-                
+
                 const addChoiceBtn = newQuestionForm.querySelector('.add-choice-btn');
                 addChoiceBtn.addEventListener('click', createAddChoiceHandler(choicesContainer, questionCounter));
-                
+
                 questionsContainer.appendChild(newQuestionForm);
-                
+
                 questionCounter++;
                 totalQuestionFormsInput.value = questionCounter;
             });
-            
+
             // Add event listeners for existing "Add Choice" buttons
             document.querySelectorAll('.add-choice-btn').forEach((btn, index) => {
                 const choicesContainer = btn.previousElementSibling;
                 btn.addEventListener('click', createAddChoiceHandler(choicesContainer, index));
             });
-            
+
             function createAddChoiceHandler(container, questionIndex) {
                 return function () {
                     const choiceFormTemplate = container.querySelector('.choice-form');
                     const newChoiceForm = choiceFormTemplate.cloneNode(true);
                     const choiceCounter = container.querySelectorAll('.choice-form').length;
-                    
+
                     newChoiceForm.innerHTML = newChoiceForm.innerHTML.replace(
                         new RegExp(`choices-${questionIndex}-(\\d+)-`, 'g'),
                         `choices-${questionIndex}-${choiceCounter}-`
                     );
-                    
+
                     container.appendChild(newChoiceForm);
-                    
+
                     const totalChoiceFormsInput = container.querySelector('[id$=TOTAL_FORMS]');
                     totalChoiceFormsInput.value = parseInt(totalChoiceFormsInput.value) + 1;
                 };
             }
         });
     </script>
-    
+
 
 {% endblock content %}
 {% block footer_js %}{% endblock footer_js %}
