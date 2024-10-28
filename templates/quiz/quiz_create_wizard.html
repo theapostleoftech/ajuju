@@ -5,9 +5,9 @@
 {% block head_js %}{% endblock head_js %}
 {% block head %}{% endblock %}
 {% block content %}
-    <div class="container mx-auto p-6">
+    <div class="container bg-accent-50 mx-auto p-6 rounded-xl">
         <h1 class="text-3xl font-bold mb-6">Create a New Quiz</h1>
-        <form id="quiz-form" method="POST" class="bg-accent-50 px-8 pt-6 pb-8 mb-4 rounded-xl">
+        <form id="quiz-form" method="POST" class="px-8 pt-6 pb-8 mb-4">
             {% csrf_token %}
 
             <div class="mb-6">
@@ -19,8 +19,8 @@
                 <h2 class="text-xl font-semibold mb-2">Questions</h2>
                 {{ question_formset.management_form }}
                 {% for question_form in question_formset %}
-                    <div class="question-form mb-6 p-4 ">
-                        <h3 class="text-lg font-medium mb-2">Questions {{ forloop.counter }}</h3>
+                    <div class="question-form mb-6 p-4">
+                        <h3 class="text-lg font-medium mb-2">Question {{ forloop.counter }}</h3>
                         {{ question_form.as_p }}
 
                         <div class="choices-container mt-4">
