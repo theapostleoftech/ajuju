@@ -3,6 +3,10 @@ Settings for ajuju project.
 """
 import os
 from pathlib import Path
+from os import getenv
+from urllib.parse import urlparse
+
+from dotenv import load_dotenv
 
 import environ
 from django.core.management.utils import get_random_secret_key
@@ -88,12 +92,26 @@ ASGI_APPLICATION = 'ajuju.asgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+if DEBUG:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
     }
-}
+else:
+    tmpPostgres = urlparse(os.getenv("DATABASE_URL"))
+
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': tmpPostgres.path.replace('/', ''),
+            'USER': tmpPostgres.username,
+            'PASSWORD': tmpPostgres.password,
+            'HOST': tmpPostgres.hostname,
+            'PORT': 5432,
+        }
+    }
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
