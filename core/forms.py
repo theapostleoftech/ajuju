@@ -5,11 +5,8 @@ class BaseFormMixin:
     """
 
     def __init__(self, *args, **kwargs):
-        # Optional: Allow custom widget attributes to be passed in via kwargs
         self.widget_attrs = kwargs.pop('widget_attrs', {
-            'class': 'inset-y-0 disabled:opacity-50 disabled:pointer-events-none rounded-xl text-sm '
-                     'inline-flex focus:border-accent-800 focus:ring-accent-800 bg-light-500 '
-                     'appearance-none w-full ps-10 p-3 py-3.5 px-4 border border-accent-300'
+            'class': "block py-2.5 px-0 w-full text-sm text-accent-900 bg-transparent border-0 border-b-2 border-accent-300 appearance-none focus:outline-none focus:ring-0 focus:border-accent-600 peer"
         })
 
         super().__init__(*args, **kwargs)
@@ -21,7 +18,5 @@ class BaseFormMixin:
         """
         for field_name, field in self.fields.items():
             if field.widget:
-                # Update the widget's attributes
                 field.widget.attrs.update(self.widget_attrs)
-                # Optionally: Customize attributes per field here if needed
                 field.widget.attrs.update({'placeholder': f'Enter {field.label}'})

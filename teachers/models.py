@@ -1,3 +1,6 @@
+"""
+This is the model for the teacher
+"""
 from django.db import models
 
 
