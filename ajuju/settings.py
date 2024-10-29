@@ -28,7 +28,7 @@ DEVELOPMENT_MODE = env.bool('DEVELOPMENT_MODE', default=False)
 # Debug
 DEBUG = env.bool('DJANGO_DEBUG', )
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['3.218.158.131', 'localhost', '12.0.0.1', 'chukwunonsonwankpa.me', 'ajuju.chukwunonsonwankpa.me', '*.chukwunonsonwankpa.me']
 
 AUTH_USER_MODEL = 'users.UserModel'
 
@@ -89,7 +89,7 @@ TEMPLATES = [
     },
 ]
 
-# WSGI_APPLICATION = 'ajuju.wsgi.application'
+WSGI_APPLICATION = 'ajuju.wsgi.application'
 ASGI_APPLICATION = 'ajuju.asgi.application'
 
 # Database
